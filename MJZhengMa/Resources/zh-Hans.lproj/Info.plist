@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>zh_CN</string>
+	<key>CFBundleDisplayName</key>
+	<string>MJZhengMa</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFile</key>
+	<string>MJzheng.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.MJsaka.inputmethod.MJZhengMa</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>MJZhengMa</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>InputMethodConnectionName</key>
+	<string>MJZheng_1_Connection</string>
+	<key>InputMethodServerControllerClass</key>
+	<string>MJInputController</string>
+	<key>InputMethodServerDelegateClass</key>
+	<string>MJInputController</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSBackgroundOnly</key>
+	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015年 MJsaka. All rights reserved.</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>tsInputMethodCharacterRepertoireKey</key>
+	<array>
+		<string>Hans</string>
+	</array>
+	<key>tsInputMethodIconFileKey</key>
+	<string>MJzheng.icns</string>
+</dict>
+</plist>
