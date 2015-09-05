@@ -5,21 +5,20 @@
 //  Created by MJsaka on 15/2/9.
 //  Copyright (c) 2015年 MJsaka. All rights reserved.
 //
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "MJConversionEngine.h"
 #import "MJDict.h"
 #import "Dict_String.h"
 #import "MJCodeGenerator.h"
-#import <math.h>
 
 @interface MJConversionEngine(){
     MJCodeGenerator* codeGenerator;
-    NSMutableArray* _transformDictionary;
+    NSMutableArray* _dictionayArray;
     MJDictIndexNodeType* _topLevelIndex;
     const NSArray* _fullPunctuationOrSymbolArray;
     BOOL _dictModified;
 }
--(void)initTransformDictionary;
+-(void)initdictionayArray;
 -(void)initPunctuationArray;
 -(void)initIndex;
 -(void)establishIndexForNode:(MJDictIndexNodeType*)indexNode;
@@ -30,10 +29,10 @@
 @implementation MJConversionEngine
 
 -(NSString*)wordAtDictIndex:(NSInteger)index{
-    return [[_transformDictionary objectAtIndex:index] wordString];
+    return [[_dictionayArray objectAtIndex:index] wordString];
 }
 -(NSString*)codeAtDictIndex:(NSInteger)index{
-    return [[_transformDictionary objectAtIndex:index] codeString];
+    return [[_dictionayArray objectAtIndex:index] codeString];
 }
 -(MJDictIndexNodeType*)topLevelIndex{
     return _topLevelIndex;
@@ -64,17 +63,17 @@
     return NO;
 }
 -(void)adjustFreqForWordAtIndex:(NSInteger)index startIndex:(NSInteger)start{
-    double startDictFreq = [[_transformDictionary objectAtIndex:start] wordFrequency];
-    double indexDictFreq = [[_transformDictionary objectAtIndex:index] wordFrequency];
+    double startDictFreq = [[_dictionayArray objectAtIndex:start] wordFrequency];
+    double indexDictFreq = [[_dictionayArray objectAtIndex:index] wordFrequency];
     indexDictFreq = indexDictFreq * (1.01 + log(startDictFreq/indexDictFreq));
-    [[_transformDictionary objectAtIndex:index] setWordFrequency:indexDictFreq];
+    [[_dictionayArray objectAtIndex:index] setWordFrequency:indexDictFreq];
     NSInteger insetIndex = index - 1;
-    while (insetIndex >= start && indexDictFreq > [[_transformDictionary objectAtIndex:insetIndex] wordFrequency] )
+    while (insetIndex >= start && indexDictFreq > [[_dictionayArray objectAtIndex:insetIndex] wordFrequency] )
     {
         --insetIndex;
     }
     for (NSInteger i=index-1; i>insetIndex ; --i) {
-        [_transformDictionary exchangeObjectAtIndex:i withObjectAtIndex:i+1];
+        [_dictionayArray exchangeObjectAtIndex:i withObjectAtIndex:i+1];
     }
     _dictModified = YES;
 }
@@ -94,8 +93,8 @@
         node = [node nextLevelIndexNode:next];
         ++i;
     }
-    NSInteger index = [_transformDictionary indexOfObject:dict inSortedRange:NSMakeRange([node indexStart],[node indexCount]) options:NSBinarySearchingInsertionIndex | NSBinarySearchingLastEqual usingComparator:MJDictCompare];
-    [_transformDictionary insertObject:dict atIndex:index];
+    NSInteger index = [_dictionayArray indexOfObject:dict inSortedRange:NSMakeRange([node indexStart],[node indexCount]) options:NSBinarySearchingInsertionIndex | NSBinarySearchingLastEqual usingComparator:MJDictCompare];
+    [_dictionayArray insertObject:dict atIndex:index];
     _dictModified = YES;
     [self initIndex];
 }
@@ -140,7 +139,7 @@
     }
 }
 
--(void)initTransformDictionary{
+-(void)initdictionayArray{
     NSFileManager* fileManager = [NSFileManager defaultManager];
     NSString* pathOfBaseDict;
     if ([fileManager isReadableFileAtPath:[@"~/.config/MJZhengMa" stringByExpandingTildeInPath]]) {
@@ -151,11 +150,11 @@
     }
     NSString* baseDictFileString = [NSString stringWithContentsOfFile:pathOfBaseDict encoding:NSUTF8StringEncoding error:nil];
     NSMutableArray* _originalDictionary = dictArrayFromDictString(baseDictFileString);
-    _transformDictionary = _originalDictionary;
+    _dictionayArray = _originalDictionary;
 }
 -(void)initIndex{
     _topLevelIndex = [[MJDictIndexNodeType alloc] init];
-    [_topLevelIndex setIndexStart:0 indexEnd:[_transformDictionary count]-1 indexLevel:0];
+    [_topLevelIndex setIndexStart:0 indexEnd:[_dictionayArray count]-1 indexLevel:0];
     [self establishIndexForNode:_topLevelIndex];
 
 }
@@ -179,7 +178,7 @@
     self = [super init];
     if (self) {
         codeGenerator = [[MJCodeGenerator alloc] init];
-        [self initTransformDictionary];
+        [self initdictionayArray];
         [self initIndex];
         [self initPunctuationArray];
         _dictModified = NO;
@@ -190,7 +189,7 @@
 -(void)saveDictToFile {
     if (_dictModified) {
         NSString  *pathOfBaseDict = [@"~/.config/MJZhengMa/Base.txt" stringByExpandingTildeInPath];
-        NSString* _stringOfDictFile = stringFromDictArray(_transformDictionary);
+        NSString* _stringOfDictFile = stringFromDictArray(_dictionayArray);
         [_stringOfDictFile writeToFile:pathOfBaseDict atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         _dictModified = NO;
     }

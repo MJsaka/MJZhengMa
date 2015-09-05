@@ -7,6 +7,7 @@
 //
 
 #import "MJAppDelegate.h"
+#import "MJCandidatesPanel.h"
 
 @implementation MJAppDelegate
 
@@ -14,20 +15,63 @@
     return _conversionEngine;
 }
 
+-(MJCandidatesPanel*)candidatePanel{
+    return _candidatesPanel;
+}
+
+- (void)updateUIStyle:(BOOL)initializing{
+    MJUIStyle *style;
+    if (initializing) {
+        style = [[MJUIStyle alloc] init];
+        
+        style.horizontal = NO;
+        style.inlinePreedit = NO;
+        
+        style.fontName = @"SimSun";
+        style.fontSize = 28;
+        
+        style.alpha = 1.0;
+        
+        style.cornerRadius = 15;
+        style.borderHeight = 15;
+        style.borderWidth = 15;
+        
+        style.lineSpacing = 5;
+        style.spacing = 5;
+        
+        style.backgroundColor = @"0xededed";
+        style.textColor = @"0xe000e0";
+        style.candidateTextColor = @"0x000000";
+        
+        
+        style.highlightedBackgroundColor = @"0xededed";
+        style.highlightedTextColor = @"0xe000e0";
+        style.highlightedCandidateTextColor = @"0x4080ff";
+    
+        [_candidatesPanel updateUIStyle:style];
+        _baseStyle = style;
+    }
+    else {
+        style = [_baseStyle copy];
+    }
+}
+
 /*
  
 -(NSMenu*)menu{
     return _menu;
 }
+ 
+ */
 
 -(void)awakeFromNib
 {
-    NSMenuItem*		preferences = [_menu itemWithTag:1];
-    
-    if ( preferences ) {
-        [preferences setAction:@selector(showPreferences:)];
-    }
+    [self updateUIStyle:YES];
+//    NSMenuItem*		preferences = [_menu itemWithTag:1];
+//    
+//    if ( preferences ) {
+//        [preferences setAction:@selector(showPreferences:)];
+//    }
 }
- 
- */
+
 @end

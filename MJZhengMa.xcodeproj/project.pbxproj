@@ -22,7 +22,7 @@
 		C55142521A8F1CB100918016 /* Dict_String.m in Sources */ = {isa = PBXBuildFile; fileRef = C55142511A8F1CB100918016 /* Dict_String.m */; };
 		C55142531A8F1F8B00918016 /* Dict_String.m in Sources */ = {isa = PBXBuildFile; fileRef = C55142511A8F1CB100918016 /* Dict_String.m */; };
 		C55895E21AA7588B00F17367 /* MJzheng.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5A49C8D1AA74FC600FEA6E2 /* MJzheng.icns */; };
-		C5967B541AB1C746007CB8B9 /* MJCandates.m in Sources */ = {isa = PBXBuildFile; fileRef = C5967B531AB1C746007CB8B9 /* MJCandates.m */; };
+		C5967B541AB1C746007CB8B9 /* MJCandidatesPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */; };
 		C5B97AF21AAA81DE00782594 /* MJCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */; };
 		C5B97AF31AAA81DE00782594 /* MJCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */; };
 		C5B97AF51AAA97A600782594 /* GouCi.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5B97AF41AAA97A600782594 /* GouCi.txt */; };
@@ -56,14 +56,14 @@
 		C55895D81AA7567900F17367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Base; path = Base.lproj/MJzheng.icns; sourceTree = "<group>"; };
 		C55895DA1AA7568D00F17367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Resources/Base.lproj/Info.plist; sourceTree = "<group>"; };
 		C55895DE1AA756EF00F17367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Resources/Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		C5967B521AB1C746007CB8B9 /* MJCandates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJCandates.h; sourceTree = "<group>"; };
-		C5967B531AB1C746007CB8B9 /* MJCandates.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJCandates.m; sourceTree = "<group>"; };
-		C5967B551AB1D146007CB8B9 /* ss.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ss.m; sourceTree = "<group>"; };
+		C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJCandidatesPanel.m; sourceTree = "<group>"; };
 		C5A49C841AA74D0000FEA6E2 /* MJAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJAppDelegate.h; sourceTree = "<group>"; };
 		C5A49C851AA74D0000FEA6E2 /* MJAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJAppDelegate.m; sourceTree = "<group>"; };
 		C5B97AF01AAA81DE00782594 /* MJCodeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJCodeGenerator.h; sourceTree = "<group>"; };
 		C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJCodeGenerator.m; sourceTree = "<group>"; };
 		C5B97AF41AAA97A600782594 /* GouCi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GouCi.txt; sourceTree = "<group>"; };
+		C5CCB2681B993B84002BE914 /* MacOS_KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacOS_KeyCode.h; sourceTree = "<group>"; };
+		C5CCB26A1B9AA42A002BE914 /* MJCandidatesPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJCandidatesPanel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,17 +105,17 @@
 		C525A3DC1A88EBD5007D73F3 /* MJZhengMa */ = {
 			isa = PBXGroup;
 			children = (
+				C5CCB2681B993B84002BE914 /* MacOS_KeyCode.h */,
 				C525A4031A88EC3B007D73F3 /* MJInputController.h */,
 				C525A4041A88EC3B007D73F3 /* MJInputController.m */,
 				C525A3FF1A88EC3B007D73F3 /* MJConversionEngine.h */,
 				C525A4001A88EC3B007D73F3 /* MJConversionEngine.m */,
-				C5967B521AB1C746007CB8B9 /* MJCandates.h */,
-				C5967B531AB1C746007CB8B9 /* MJCandates.m */,
+				C5CCB26A1B9AA42A002BE914 /* MJCandidatesPanel.h */,
+				C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */,
 				C5A49C841AA74D0000FEA6E2 /* MJAppDelegate.h */,
 				C5A49C851AA74D0000FEA6E2 /* MJAppDelegate.m */,
 				C525A4011A88EC3B007D73F3 /* MJDict.h */,
 				C525A4021A88EC3B007D73F3 /* MJDict.m */,
-				C5967B551AB1D146007CB8B9 /* ss.m */,
 				C525A3DD1A88EBD5007D73F3 /* Supporting Files */,
 			);
 			path = MJZhengMa;
@@ -290,7 +290,7 @@
 			files = (
 				C525A40F1A88EC3B007D73F3 /* main.m in Sources */,
 				C55142531A8F1F8B00918016 /* Dict_String.m in Sources */,
-				C5967B541AB1C746007CB8B9 /* MJCandates.m in Sources */,
+				C5967B541AB1C746007CB8B9 /* MJCandidatesPanel.m in Sources */,
 				C5B97AF21AAA81DE00782594 /* MJCodeGenerator.m in Sources */,
 				C525A40B1A88EC3B007D73F3 /* MJDict.m in Sources */,
 				C50DF5EB1AB9694E00AA2987 /* MJAppDelegate.m in Sources */,

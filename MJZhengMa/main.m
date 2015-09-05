@@ -11,7 +11,6 @@
 #import "MJAppDelegate.h"
 
 IMKServer*          server;
-IMKCandidates*      candidates = nil;
 const NSString*     kConnectionName = @"MJZheng_1_Connection";
 
 int main(int argc, char *argv[])
@@ -22,8 +21,6 @@ int main(int argc, char *argv[])
     
     NSString* identifier = [[NSBundle mainBundle] bundleIdentifier];
     server = [[IMKServer alloc] initWithName:(NSString*)kConnectionName bundleIdentifier:identifier];
-    
-    candidates = [[IMKCandidates alloc] initWithServer:server panelType:kIMKSingleColumnScrollingCandidatePanel];
     
     [NSApp run];
     return 0;
