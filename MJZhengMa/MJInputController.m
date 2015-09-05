@@ -80,16 +80,17 @@
     BOOL handled = NO;
     NSUInteger modifiers = [event modifierFlags];
     NSInteger keyCode = [event keyCode];
-//    NSLog(@"event...modifiers:%lu,keycode:%ld,keydown:%@",modifiers,keyCode,_hasKeyDownBetweenModifier?@"YES":@"NO");
     switch ([event type]) {
         case NSFlagsChanged:
         {
             NSUInteger changes = modifiers ^ _lastModifier;
             if (changes == OSX_SHIFT_MASK && !_hasKeyDownBetweenModifier)
             {
-                handled = YES;
                 _isEnglishMode = _isEnglishMode?NO:YES;
+                _hasKeyDownBetweenModifier = YES;
                 [self commitOrigin:sender];
+                handled = YES;
+                break;
             }
             _hasKeyDownBetweenModifier = NO;
             break;
@@ -132,12 +133,20 @@
             }
             NSString* keyChars = [event charactersIgnoringModifiers];
             NSScanner* scanner = [NSScanner scannerWithString:keyChars];
-            
+
             if ([scanner scanCharactersFromSet:[NSCharacterSet lowercaseLetterCharacterSet] intoString:nil])
             {//小写字母
-                [self originalBufferAppend:keyChars];
-                [self transform:sender];
-                handled = YES;
+                if (modifiers == NSShiftKeyMask) {
+                    _isEnglishMode = YES;
+                    if (_transformedCount != 0) {
+                        [self commitComposition:sender];
+                    }
+                    handled = NO;
+                }else{
+                    [self originalBufferAppend:keyChars];
+                    [self transform:sender];
+                    handled = YES;
+                }
                 break;
             }else if ( [scanner scanCharactersFromSet:[NSCharacterSet uppercaseLetterCharacterSet] intoString:nil] )
             {//大写字母：进入英文模式
