@@ -30,6 +30,7 @@
     id                              _currentClient;
     NSRect                          _inputPos;
     
+    Boolean                         _hasKeyDownBetweenModifier;
     NSUInteger                      _lastModifier;
     Boolean                         _isCreatWordMode;
     Boolean                         _isEnglishMode;
@@ -59,6 +60,7 @@
         _candidates = nil;
         _candidatesTips = nil;
         
+        _hasKeyDownBetweenModifier= NO;
         _isCreatWordMode = NO;
         _isEnglishMode = NO;
         
@@ -78,22 +80,23 @@
     BOOL handled = NO;
     NSUInteger modifiers = [event modifierFlags];
     NSInteger keyCode = [event keyCode];
-    
-
-
+//    NSLog(@"event...modifiers:%lu,keycode:%ld,keydown:%@",modifiers,keyCode,_hasKeyDownBetweenModifier?@"YES":@"NO");
     switch ([event type]) {
         case NSFlagsChanged:
         {
-            if (modifiers == OSX_SHIFT_MASK && keyCode == 0)
+            NSUInteger changes = modifiers ^ _lastModifier;
+            if (changes == OSX_SHIFT_MASK && !_hasKeyDownBetweenModifier)
             {
                 handled = YES;
                 _isEnglishMode = _isEnglishMode?NO:YES;
                 [self commitOrigin:sender];
             }
+            _hasKeyDownBetweenModifier = NO;
             break;
         }
         case NSKeyDown:
         {
+            _hasKeyDownBetweenModifier = YES;
             if (_isEnglishMode) {
                 handled = NO;
                 break;
@@ -207,7 +210,7 @@
             handled = NO;
             break;
     }
-    
+    _lastModifier = modifiers;
     return handled;
 }
 
