@@ -13,7 +13,10 @@
 {
     IBOutlet id _textView;
     NSString* _stringOfTextFile;
-    NSString* _stringOfDictFile;
+    NSString* _stringOfXMDictFile;
+    NSArray* _arrayOfXMDZDict;
+    NSArray* _arrayOfPYDict;
+    NSString* _stringOfPYDict;
     MJCodeGenerator* codeGenerator;
 }
 - (IBAction)selectTextFile:(id)sender;
@@ -22,5 +25,8 @@
 - (IBAction)regenerateDict:(id)sender;
 - (IBAction)removeDuplicate:(id)sender;
 - (IBAction)saveDictFile:(id)sender;
-
+-(IBAction)appendZMCodeForPinYin:(id)sender;
+-(IBAction)selectXMDZDictFile:(id)sender;
+-(IBAction)selectPYDictFile:(id)sender ;
+- (IBAction)appendFreq:(id)sender;
 @end

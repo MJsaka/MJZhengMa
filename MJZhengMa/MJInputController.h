@@ -15,7 +15,7 @@ typedef enum CandidatesSelectControl{
     PAGE_PRE = 1,
     SELECTION_NEXT = 2,
     SELECTION_PRE = 3
-} CandidatesSelectControlType;
+} CandidatesSelectChangeType;
 
 
 @interface MJInputController : IMKInputController

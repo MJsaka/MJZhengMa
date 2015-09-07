@@ -8,23 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MJDict : NSObject
--(NSString*)codeString;
--(NSString*)wordString;
--(double)wordFrequency;
--(void)setCodeString:(NSString*)string;
--(void)setWordString:(NSString*)string;
--(void)setWordFrequency:(double)freq;
+@interface MJXMDict : NSObject
+@property (strong) NSString* codeString;
+@property (strong) NSString* wordString;
+@property (assign) double wordFrequency;
+@end
+
+@interface MJPYDict : MJXMDict
+
+@property (strong) NSString* xmCodeString;
 @end
 
 @interface MJDictIndexNodeType : NSObject
--(NSInteger)indexStart;
--(NSInteger)indexEnd;
--(NSInteger)indexCount;
--(NSInteger)indexLevel;
--(MJDictIndexNodeType*)nextLevelIndexNode:(NSInteger)index;
--(MJDictIndexNodeType*)initNextLevelIndexNode:(NSInteger)index;
--(void)setIndexStart:(NSInteger)start indexEnd:(NSInteger)end indexLevel:(NSInteger)level;
+@property (assign) NSInteger indexStart;
+@property (assign) NSInteger indexEnd;
 @end
 
 

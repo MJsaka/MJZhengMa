@@ -177,7 +177,7 @@
                     handled = YES;
                     break;
                 }else{
-                    handled = YES;
+                    handled = NO;
                     break;
                 }
             }else if ( [scanner scanCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:nil] ||
@@ -441,7 +441,7 @@
 
 }
 
--(void)MJcandidateSelectionChanged:(CandidatesSelectControlType)control{
+-(void)MJcandidateSelectionChanged:(CandidatesSelectChangeType)control{
     NSInteger currentShowIndex = _candidatesShowIndex;
     NSInteger currentSelectIndex = _candidatesSelectedIndex;
     switch (control) {

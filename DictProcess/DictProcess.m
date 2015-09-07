@@ -9,8 +9,10 @@
 #import "DictProcess.h"
 #import "Dict_String.h"
 #import "MJDict.h"
+#import "MJCodeGenerator.h"
 
 @implementation DictProcess
+
 -(void) awakeFromNib{
     codeGenerator = [[MJCodeGenerator alloc] init];
 }
@@ -31,40 +33,65 @@
     if ([theOpenPanel runModal] == NSModalResponseOK)
     {
         NSString* theFileName = [theOpenPanel filename];
-        _stringOfDictFile = [NSString stringWithContentsOfFile:theFileName encoding:NSUTF8StringEncoding error:NULL];
-        [_textView setString:_stringOfDictFile];
+        _stringOfXMDictFile = [NSString stringWithContentsOfFile:theFileName encoding:NSUTF8StringEncoding error:NULL];
+        NSArray* array = xmDictArrayFromDictString(_stringOfXMDictFile);
+        _stringOfTextFile = stringFromXMDictArray(array);
+        [_textView setString:_stringOfTextFile];
+    }
+}
+
+-(IBAction)selectXMDZDictFile:(id)sender {
+    NSOpenPanel *theOpenPanel = [NSOpenPanel openPanel];
+    [theOpenPanel setTitle:@"Select Dict File"];
+    if ([theOpenPanel runModal] == NSModalResponseOK)
+    {
+        NSString* theFileName = [theOpenPanel filename];
+        NSString* _stringOfXMDZDictFile = [NSString stringWithContentsOfFile:theFileName encoding:NSUTF8StringEncoding error:NULL];
+        _arrayOfXMDZDict = xmDictArrayFromDictString(_stringOfXMDZDictFile);
+    }
+}
+
+
+-(IBAction)selectPYDictFile:(id)sender {
+    NSOpenPanel *theOpenPanel = [NSOpenPanel openPanel];
+    [theOpenPanel setTitle:@"Select Dict File"];
+    if ([theOpenPanel runModal] == NSModalResponseOK)
+    {
+        NSString* theFileName = [theOpenPanel filename];
+        NSString* _stringOfPYDictFile = [NSString stringWithContentsOfFile:theFileName encoding:NSUTF8StringEncoding error:NULL];
+        _arrayOfPYDict = pyDictArrayFromCodeWordFreqString(_stringOfPYDictFile);
     }
 }
 
 -(IBAction)establishDict:(id)sender{
-    NSMutableArray* array = dictArrayFromTextString(_stringOfTextFile);
+    NSMutableArray* array = xmDictArrayFromWordFreqString(_stringOfTextFile);
     for (NSInteger i = 0; i < [array count]; ++i) {
         if ( ![codeGenerator generateCodeForDictElement:[array objectAtIndex:i]] ) {
             [array removeObjectAtIndex:i];
             --i;
         }
     }
-    _stringOfDictFile = stringFromDictArray(array);
-    [_textView setString:_stringOfDictFile];
+    _stringOfXMDictFile = stringFromXMDictArray(array);
+    [_textView setString:_stringOfXMDictFile];
     _stringOfTextFile = [NSString string];
 }
 
 -(IBAction)regenerateDict:(id)sender{
     ///*
-    NSMutableArray* array = dictArrayFromDictString(_stringOfDictFile);
+    NSMutableArray* array = xmDictArrayFromDictString(_stringOfXMDictFile);
     /*
     for (NSInteger i = 0; i < [array count]; ++i) {
         [codeGenerator generateCodeForDictElement:[array objectAtIndex:i]];
     }
      */
-    NSMutableArray* sArray = [NSMutableArray arrayWithArray: [array sortedArrayUsingComparator:MJDictCompare]];
-    _stringOfTextFile = stringFromDictArray(sArray);
-    _stringOfDictFile = _stringOfTextFile;
-    [_textView setString:_stringOfDictFile];
+    NSMutableArray* sArray = [NSMutableArray arrayWithArray: [array sortedArrayUsingComparator:MJXMDictCompare]];
+    _stringOfTextFile = stringFromXMDictArray(sArray);
+    _stringOfXMDictFile = _stringOfTextFile;
+    [_textView setString:_stringOfXMDictFile];
     _stringOfTextFile = [NSString string];
     //*/
     //////////去除7个以上的重码//////////////////////////////////////
-    //NSMutableArray* array = dictArrayFromDictString(_stringOfDictFile);
+    //NSMutableArray* array = xmDictArrayFromDictString(_stringOfXMDictFile);
     
     /*
     NSInteger length = [sArray count] ;
@@ -87,14 +114,43 @@
         ++i;
     }
      */
-    _stringOfTextFile = stringFromDictArray(sArray);
-    _stringOfDictFile = _stringOfTextFile;
-    [_textView setString:_stringOfDictFile];
+//    _stringOfTextFile = stringFromXMDictArray(sArray);
+//    _stringOfXMDictFile = _stringOfTextFile;
+//    [_textView setString:_stringOfXMDictFile];
     ///////////////////////////////////////////////////////////////////
 }
 
+-(IBAction)appendFreq:(id)sender{
+    NSMutableArray* array = xmDictArrayFromDictString(_stringOfTextFile);
+    for (NSInteger i = 0; i < [array count]; ++i) {
+        if ( ![codeGenerator apendWordFrequency:[array objectAtIndex:i]] ) {
+            [[array objectAtIndex:i] setWordFrequency:0];
+        }
+    }
+    _stringOfXMDictFile = stringFromXMDictArray(array);
+    [_textView setString:_stringOfXMDictFile];
+    _stringOfTextFile = [NSString string];
+}
+
+-(IBAction)appendZMCodeForPinYin:(id)sender{
+    
+    for (NSInteger i = 0; i < [_arrayOfPYDict count]; ++i) {
+        NSMutableString * string = [NSMutableString stringWithString:@""];
+        for (NSInteger j = 0; j < [_arrayOfXMDZDict count] ; ++j) {
+            if ([[[_arrayOfPYDict objectAtIndex:i] wordString]
+                 isEqualToString:
+                 [[_arrayOfXMDZDict objectAtIndex:j] wordString]]) {
+                [string appendFormat:@"%@|",[[_arrayOfXMDZDict objectAtIndex:j] codeString]];
+            }
+        }
+        [[_arrayOfPYDict objectAtIndex:i] setXmCodeString:string];
+    }
+    _stringOfPYDict = stringFromPYDictArray(_arrayOfPYDict);
+    [_textView setString:_stringOfPYDict];
+}
+
 -(IBAction)removeDuplicate:(id)sender{
-    NSMutableArray* array = dictArrayFromDictString(_stringOfDictFile);
+    NSMutableArray* array = xmDictArrayFromDictString(_stringOfXMDictFile);
     for (NSInteger i=0; i<24543; ++i) {
         NSString* preString = [[array objectAtIndex:i] wordString];
         for (NSInteger j=24543; j<[array count]; ++j) {
@@ -105,15 +161,24 @@
             }
         }
     }
-    _stringOfDictFile = stringFromDictArray(array);
-    [_textView setString:_stringOfDictFile];
+    _stringOfXMDictFile = stringFromXMDictArray(array);
+    [_textView setString:_stringOfXMDictFile];
 }
 -(IBAction)saveDictFile:(id)sender {
     NSSavePanel *savePanel = [NSSavePanel savePanel];
     [savePanel setAllowedFileTypes:nil];
     [savePanel setTitle:@"Save Dict File"];
     if ([savePanel runModal] == NSModalResponseOK) {
-        [_stringOfDictFile writeToFile:[savePanel filename] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        [_stringOfXMDictFile writeToFile:[savePanel filename] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+    }
+}
+
+-(IBAction)savePYDictFile:(id)sender {
+    NSSavePanel *savePanel = [NSSavePanel savePanel];
+    [savePanel setAllowedFileTypes:nil];
+    [savePanel setTitle:@"Save Dict File"];
+    if ([savePanel runModal] == NSModalResponseOK) {
+        [_stringOfPYDict writeToFile:[savePanel filename] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     }
 }
 

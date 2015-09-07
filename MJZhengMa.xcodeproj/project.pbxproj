@@ -22,6 +22,9 @@
 		C55142521A8F1CB100918016 /* Dict_String.m in Sources */ = {isa = PBXBuildFile; fileRef = C55142511A8F1CB100918016 /* Dict_String.m */; };
 		C55142531A8F1F8B00918016 /* Dict_String.m in Sources */ = {isa = PBXBuildFile; fileRef = C55142511A8F1CB100918016 /* Dict_String.m */; };
 		C55895E21AA7588B00F17367 /* MJzheng.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5A49C8D1AA74FC600FEA6E2 /* MJzheng.icns */; };
+		C58ED5C71B9DB424005B355D /* zmdzcipin.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5C61B9DB424005B355D /* zmdzcipin.txt */; };
+		C58ED5C91B9DBA57005B355D /* zmdz.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5C81B9DBA57005B355D /* zmdz.txt */; };
+		C58ED5CB1B9DD9D5005B355D /* PYDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5CA1B9DD9D5005B355D /* PYDict.txt */; };
 		C5967B541AB1C746007CB8B9 /* MJCandidatesPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */; };
 		C5B97AF21AAA81DE00782594 /* MJCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */; };
 		C5B97AF31AAA81DE00782594 /* MJCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */; };
@@ -56,6 +59,9 @@
 		C55895D81AA7567900F17367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Base; path = Base.lproj/MJzheng.icns; sourceTree = "<group>"; };
 		C55895DA1AA7568D00F17367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Resources/Base.lproj/Info.plist; sourceTree = "<group>"; };
 		C55895DE1AA756EF00F17367 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Resources/Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C58ED5C61B9DB424005B355D /* zmdzcipin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zmdzcipin.txt; sourceTree = "<group>"; };
+		C58ED5C81B9DBA57005B355D /* zmdz.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zmdz.txt; sourceTree = "<group>"; };
+		C58ED5CA1B9DD9D5005B355D /* PYDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PYDict.txt; sourceTree = "<group>"; };
 		C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJCandidatesPanel.m; sourceTree = "<group>"; };
 		C5A49C841AA74D0000FEA6E2 /* MJAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJAppDelegate.h; sourceTree = "<group>"; };
 		C5A49C851AA74D0000FEA6E2 /* MJAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJAppDelegate.m; sourceTree = "<group>"; };
@@ -161,6 +167,8 @@
 		C55142221A8EC57900918016 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C58ED5C81B9DBA57005B355D /* zmdz.txt */,
+				C58ED5C61B9DB424005B355D /* zmdzcipin.txt */,
 				C55142471A8ED81C00918016 /* Info.plist */,
 			);
 			name = Resources;
@@ -180,6 +188,7 @@
 		C5F455791A9958580019DFE2 /* Dict */ = {
 			isa = PBXGroup;
 			children = (
+				C58ED5CA1B9DD9D5005B355D /* PYDict.txt */,
 				C5026C541AABA167001A61B6 /* Base.txt */,
 				C5B97AF41AAA97A600782594 /* GouCi.txt */,
 			);
@@ -265,6 +274,7 @@
 			files = (
 				C5026C551AABA167001A61B6 /* Base.txt in Resources */,
 				C5CBB17C1AABE360002A4088 /* MainMenu.xib in Resources */,
+				C58ED5CB1B9DD9D5005B355D /* PYDict.txt in Resources */,
 				C5B97AF51AAA97A600782594 /* GouCi.txt in Resources */,
 				C55895E21AA7588B00F17367 /* MJzheng.icns in Resources */,
 			);
@@ -275,6 +285,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C55141F91A8E3EEE00918016 /* Images.xcassets in Resources */,
+				C58ED5C91B9DBA57005B355D /* zmdz.txt in Resources */,
+				C58ED5C71B9DB424005B355D /* zmdzcipin.txt in Resources */,
 				C55142141A8E512E00918016 /* MainMenu.xib in Resources */,
 				C5B97AF61AAA97A600782594 /* GouCi.txt in Resources */,
 				C5FE37AF1AA8743900E93EAA /* MJzheng.icns in Resources */,

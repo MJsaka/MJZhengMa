@@ -9,15 +9,17 @@
 #ifndef MJZhengMa_Dict_String_h
 #define MJZhengMa_Dict_String_h
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "MJDict.h"
 
-NSComparator MJDictCompare;
+NSComparator MJXMDictCompare;
 
-NSMutableArray* dictArrayFromTextString(NSString* string);
-NSMutableArray* dictArrayFromDictString(NSString* dictString);
-NSString* stringFromDictArray(NSArray* array);
-
+NSMutableArray* xmDictArrayFromWordFreqString(NSString* string);
+NSMutableArray* xmDictArrayFromDictString(NSString* dictString);
+NSString* stringFromXMDictArray(NSArray* array);
+NSMutableArray* xmDictArrayFromCodeWordString(NSString* string);
+NSMutableArray* pyDictArrayFromCodeWordFreqString(NSString* dictString);
+NSString* stringFromPYDictArray(NSArray* array);
 
 
 #endif

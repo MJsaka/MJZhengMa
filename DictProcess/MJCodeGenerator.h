@@ -6,11 +6,11 @@
 //  Copyright (c) 2015年 MJsaka. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "MJDict.h"
 
 @interface MJCodeGenerator : NSObject
 
--(BOOL)generateCodeForDictElement:(MJDict*)dict;
-
+-(BOOL)generateCodeForDictElement:(MJXMDict*)dict;
+-(Boolean)apendWordFrequency:(MJXMDict*)dict;
 @end

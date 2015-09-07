@@ -13,7 +13,7 @@
 
 @interface MJConversionEngine(){
     MJCodeGenerator* codeGenerator;
-    NSMutableArray* _dictionayArray;
+    NSMutableArray* _xmDictArray;
     MJDictIndexNodeType* _topLevelIndex;
     const NSArray* _fullPunctuationOrSymbolArray;
     BOOL _dictModified;
@@ -23,22 +23,22 @@
 -(void)initIndex;
 -(void)establishIndexForNode:(MJDictIndexNodeType*)indexNode;
 
--(BOOL)isWordExist:(MJDict*)dict;
+-(BOOL)isWordExist:(MJXMDict*)dict;
 @end
 
 @implementation MJConversionEngine
 
 -(NSString*)wordAtDictIndex:(NSInteger)index{
-    return [[_dictionayArray objectAtIndex:index] wordString];
+    return [[_xmDictArray objectAtIndex:index] wordString];
 }
 -(NSString*)codeAtDictIndex:(NSInteger)index{
-    return [[_dictionayArray objectAtIndex:index] codeString];
+    return [[_xmDictArray objectAtIndex:index] codeString];
 }
 -(MJDictIndexNodeType*)topLevelIndex{
     return _topLevelIndex;
 }
 
--(BOOL)isWordExist:(MJDict*)dict{
+-(BOOL)isWordExist:(MJXMDict*)dict{
     NSString* code = [dict codeString];
     NSString* word = [dict wordString];
     MJDictIndexNodeType* node = _topLevelIndex;
@@ -63,25 +63,25 @@
     return NO;
 }
 -(void)adjustFreqForWordAtIndex:(NSInteger)index startIndex:(NSInteger)start{
-    double startDictFreq = [[_dictionayArray objectAtIndex:start] wordFrequency];
-    double indexDictFreq = [[_dictionayArray objectAtIndex:index] wordFrequency];
+    double startDictFreq = [[_xmDictArray objectAtIndex:start] wordFrequency];
+    double indexDictFreq = [[_xmDictArray objectAtIndex:index] wordFrequency];
     indexDictFreq = indexDictFreq * (1.01 + log(startDictFreq/indexDictFreq));
-    [[_dictionayArray objectAtIndex:index] setWordFrequency:indexDictFreq];
+    [[_xmDictArray objectAtIndex:index] setWordFrequency:indexDictFreq];
     NSInteger insetIndex = index - 1;
-    while (insetIndex >= start && indexDictFreq > [[_dictionayArray objectAtIndex:insetIndex] wordFrequency] )
+    while (insetIndex >= start && indexDictFreq > [[_xmDictArray objectAtIndex:insetIndex] wordFrequency] )
     {
         --insetIndex;
     }
     for (NSInteger i=index-1; i>insetIndex ; --i) {
-        [_dictionayArray exchangeObjectAtIndex:i withObjectAtIndex:i+1];
+        [_xmDictArray exchangeObjectAtIndex:i withObjectAtIndex:i+1];
     }
     _dictModified = YES;
 }
 
 -(void)creatWord:(NSString*)word{
-    MJDict* dict = [[MJDict alloc] init];
-    [dict setWordString:word];
-    [dict setWordFrequency:100];
+    MJXMDict* dict = [[MJXMDict alloc] init];
+    dict.wordString = word;
+    dict.wordFrequency = 100;
     if ( ![codeGenerator generateCodeForDictElement:dict] ) return;
     //判断该词是否存在
     if ([self isWordExist:dict]) return;
@@ -93,8 +93,8 @@
         node = [node nextLevelIndexNode:next];
         ++i;
     }
-    NSInteger index = [_dictionayArray indexOfObject:dict inSortedRange:NSMakeRange([node indexStart],[node indexCount]) options:NSBinarySearchingInsertionIndex | NSBinarySearchingLastEqual usingComparator:MJDictCompare];
-    [_dictionayArray insertObject:dict atIndex:index];
+    NSInteger index = [_xmDictArray indexOfObject:dict inSortedRange:NSMakeRange([node indexStart],[node indexCount]) options:NSBinarySearchingInsertionIndex | NSBinarySearchingLastEqual usingComparator:MJXMDictCompare];
+    [_xmDictArray insertObject:dict atIndex:index];
     _dictModified = YES;
     [self initIndex];
 }
@@ -149,12 +149,12 @@
         pathOfBaseDict = [_bundle pathForResource:@"Base" ofType:@"txt"];
     }
     NSString* baseDictFileString = [NSString stringWithContentsOfFile:pathOfBaseDict encoding:NSUTF8StringEncoding error:nil];
-    NSMutableArray* _originalDictionary = dictArrayFromDictString(baseDictFileString);
-    _dictionayArray = _originalDictionary;
+    NSMutableArray* _originalDictionary = xmDictArrayFromDictString(baseDictFileString);
+    _xmDictArray = _originalDictionary;
 }
 -(void)initIndex{
     _topLevelIndex = [[MJDictIndexNodeType alloc] init];
-    [_topLevelIndex setIndexStart:0 indexEnd:[_dictionayArray count]-1 indexLevel:0];
+    [_topLevelIndex setIndexStart:0 indexEnd:[_xmDictArray count]-1 indexLevel:0];
     [self establishIndexForNode:_topLevelIndex];
 
 }
@@ -189,8 +189,8 @@
 -(void)saveDictToFile {
     if (_dictModified) {
         NSString  *pathOfBaseDict = [@"~/.config/MJZhengMa/Base.txt" stringByExpandingTildeInPath];
-        NSString* _stringOfDictFile = stringFromDictArray(_dictionayArray);
-        [_stringOfDictFile writeToFile:pathOfBaseDict atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+        NSString* _stringOfXMDictFile = stringFromXMDictArray(_xmDictArray);
+        [_stringOfXMDictFile writeToFile:pathOfBaseDict atomically:YES encoding:NSUTF8StringEncoding error:NULL];
         _dictModified = NO;
     }
 }
