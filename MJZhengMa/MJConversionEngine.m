@@ -151,14 +151,14 @@
         if ([[array objectAtIndex:i] class] == [MJXMDict class]) {
             [candidatesClasses addObject:[MJXMDict class]];
             if ([originString length] < 4) {
-                [tips addObject:[NSString stringWithFormat:@"[%c]",[[[array objectAtIndex:i] codeString] characterAtIndex:[originString length]]]];
+                [tips addObject:[NSString stringWithFormat:@"%c",[[[array objectAtIndex:i] codeString] characterAtIndex:[originString length]]]];
             }
         }else if ([[array objectAtIndex:i] class] == [MJENDict class]){
             [candidatesClasses addObject:[MJENDict class]];
             [tips addObject:@""];
         }else{
             [candidatesClasses addObject:[MJPYDict class]];
-            [tips addObject:[NSString stringWithFormat:@":%@",[[array objectAtIndex:i] xmCodeString]]];
+            [tips addObject:[NSString stringWithFormat:@"[%@]",[[array objectAtIndex:i] xmCodeString]]];
         }
     }
     _currentIndex[0].startIndex = xmStartIndex;
