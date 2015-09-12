@@ -8,12 +8,11 @@
 #import <Foundation/Foundation.h>
 #import "MJCodeGenerator.h"
 
-@interface MJCodeGenerator(){
+
+@implementation MJCodeGenerator{
     NSMutableDictionary* _ZMGouCiDict;
     NSMutableDictionary* _ZMDanZiCiPinDict;
 }
-@end
-@implementation MJCodeGenerator
 
 -(id) init {
     self = [super init];

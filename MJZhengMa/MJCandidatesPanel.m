@@ -75,7 +75,6 @@ static const double kAlpha = 1.0;
 
 @implementation MJCandidatesView
 
-@synthesize candidatesPanel = _candidatesPanel;
 @synthesize backgroundColor = _backgroundColor;
 @synthesize cornerRadius = _cornerRadius;
 @synthesize borderHeight = _borderHeight;
@@ -120,7 +119,7 @@ static const double kAlpha = 1.0;
     
     NSPoint point = rect.origin;
     point.x += [self borderWidth];
-    point.y += [self borderHeight];
+    point.y += 331 - [self contentSize].height - [self borderHeight];
     [_content drawAtPoint:point];
 }
 
@@ -144,7 +143,6 @@ static const double kAlpha = 1.0;
     [_window setBackgroundColor:[NSColor clearColor]];
     
     _view = [[MJCandidatesView alloc] initWithFrame:[[_window contentView] frame]];
-    _view.candidatesPanel = self;
     [_window setContentView:_view];
     
     _attrs = [[NSMutableDictionary alloc] init];
@@ -192,8 +190,11 @@ static const double kAlpha = 1.0;
     NSRect window_rect = NSMakeRect(0, 0, 0, 0);
     // resize frame
     NSSize content_size = [_view contentSize];
-    window_rect.size.height = content_size.height + [_view borderHeight] * 2;
+    window_rect.size.height = 331;
     window_rect.size.width = content_size.width + [_view borderWidth] * 2;
+    if (window_rect.size.width < 200) {
+        window_rect.size.width = 200;
+    }
     // reposition window
     window_rect.origin.x = NSMinX(_positionRect);
     window_rect.origin.y = NSMinY(_positionRect) - kOffsetHeight - NSHeight(window_rect);

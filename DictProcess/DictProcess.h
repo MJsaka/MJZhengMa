@@ -7,26 +7,30 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "DictStringTransfer.h"
 #import "MJCodeGenerator.h"
 
 @interface DictProcess : NSObject
 {
-    IBOutlet id _textView;
-    NSString* _stringOfTextFile;
-    NSString* _stringOfXMDictFile;
-    NSArray* _arrayOfXMDZDict;
-    NSArray* _arrayOfPYDict;
-    NSString* _stringOfPYDict;
+    DictStringTransfer* _dictStringTransformer;
     MJCodeGenerator* codeGenerator;
+    IBOutlet id _textView;
+    
+    NSString* _stringOfTextFile;
+    NSString* _stringOfDictFile;
+    
+    NSArray* _arrayOfXMDict;
+    NSArray* _arrayOfPYDict;
+    
 }
-- (IBAction)selectTextFile:(id)sender;
-- (IBAction)selectDictFile:(id)sender;
-- (IBAction)establishDict:(id)sender;
-- (IBAction)regenerateDict:(id)sender;
-- (IBAction)removeDuplicate:(id)sender;
-- (IBAction)saveDictFile:(id)sender;
--(IBAction)appendZMCodeForPinYin:(id)sender;
--(IBAction)selectXMDZDictFile:(id)sender;
--(IBAction)selectPYDictFile:(id)sender ;
-- (IBAction)appendFreq:(id)sender;
+-(IBAction)generateArrayOfXMDict:(id)sender;
+-(IBAction)generateArrayOfPYDict:(id)sender;
+
+-(IBAction)generateCodeForXMDict:(id)sender;
+-(IBAction)sortXMDict:(id)sender;
+-(IBAction)appendFreqForXMDict:(id)sender;
+-(IBAction)appendXMCodeForPY:(id)sender;
+
+-(IBAction)selectTextFile:(id)sender;
+-(IBAction)saveDictFile:(id)sender;
 @end

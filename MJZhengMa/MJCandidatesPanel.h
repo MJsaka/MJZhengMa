@@ -44,7 +44,6 @@
 {
     NSAttributedString* _content;
 }
-@property (nonatomic, weak)  MJCandidatesPanel *candidatesPanel;
 @property (nonatomic, retain) NSColor *backgroundColor;
 @property (nonatomic, assign) double cornerRadius;
 @property (nonatomic, assign) double borderHeight;

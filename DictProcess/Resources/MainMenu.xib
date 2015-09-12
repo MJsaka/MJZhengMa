@@ -9,31 +9,22 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="564" height="543"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="564" height="543"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="564" height="543"/>
+            <value key="maxSize" type="size" width="564" height="543"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="-1" width="564" height="543"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnT-a9-KGK">
-                        <rect key="frame" x="14" y="495" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="选择文本" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aA1-zS-S1P">
+                        <rect key="frame" x="14" y="495" width="153" height="32"/>
+                        <buttonCell key="cell" type="push" title="Select Text" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aA1-zS-S1P">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
                             <action selector="selectTextFile:" target="4go-iw-qV9" id="Una-I1-jJT"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AQz-1T-MD1">
-                        <rect key="frame" x="146" y="464" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="重建码本" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pPt-cd-obV">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="regenerateDict:" target="4go-iw-qV9" id="uH6-fw-EqO"/>
                         </connections>
                     </button>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Cb-l6-Itk">
@@ -43,7 +34,7 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView editable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="Aod-k0-6L8">
-                                    <rect key="frame" x="0.0" y="0.0" width="223" height="216"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="223" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="522" height="303"/>
@@ -64,42 +55,29 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mGg-wr-jTH">
-                        <rect key="frame" x="14" y="464" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="建立码表" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="29C-89-ZAH">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ut6-wF-DBI">
+                        <rect key="frame" x="14" y="462" width="153" height="32"/>
+                        <buttonCell key="cell" type="push" title="GeneratePYArray" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qgv-oJ-pDh">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="establishDict:" target="4go-iw-qV9" id="EJb-IZ-jXw"/>
+                            <action selector="generateArrayOfPYDict:" target="4go-iw-qV9" id="cNO-8p-eRx"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CVu-zM-8RM">
-                        <rect key="frame" x="146" y="495" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DQy-U8-icy">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <string key="title" base64-UTF8="YES">
-6YCJ5oup56CBCAjmnKw
-</string>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="selectDictFile:" target="4go-iw-qV9" id="0GO-N7-1fZ"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UxO-A3-0Oh">
-                        <rect key="frame" x="14" y="431" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="移除多码" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7jZ-sY-iM2">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eO9-r9-lMU">
+                        <rect key="frame" x="180" y="462" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="AddXMCodeForPY" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e93-PM-7J2">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="removeDuplicate:" target="4go-iw-qV9" id="QRG-wm-bCz"/>
+                            <action selector="appendXMCodeForPY:" target="4go-iw-qV9" id="YQY-xU-cHt"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQE-eu-md2">
-                        <rect key="frame" x="146" y="431" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="保存码表" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bi4-ib-Oc7">
+                        <rect key="frame" x="180" y="495" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="Save DictString" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bi4-ib-Oc7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -107,54 +85,34 @@
                             <action selector="saveDictFile:" target="4go-iw-qV9" id="I4F-N9-f2X"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MhX-pW-IPf">
-                        <rect key="frame" x="14" y="398" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="添加词频" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9Nz-5X-SaX">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jeh-Gx-RxO">
+                        <rect key="frame" x="364" y="495" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="GenerateXMArray" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bOb-k5-XyN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="appendFreq:" target="4go-iw-qV9" id="7Sw-KP-x7e"/>
+                            <action selector="generateArrayOfXMDict:" target="4go-iw-qV9" id="lTM-tt-DaR"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="78Q-Nl-nip">
-                        <rect key="frame" x="146" y="398" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="ZM单字码本" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vT6-Kz-7AY">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pjO-3m-bax">
+                        <rect key="frame" x="364" y="462" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="SortXMDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WYK-gk-Q2b">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="selectXMDZDictFile:" target="4go-iw-qV9" id="op8-GH-bpT"/>
+                            <action selector="sortXMDict:" target="4go-iw-qV9" id="rem-I6-GAc"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ut6-wF-DBI">
-                        <rect key="frame" x="14" y="365" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="PY单字码本" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qgv-oJ-pDh">
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pPd-3l-j9V">
+                        <rect key="frame" x="364" y="424" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="SortPYDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ISF-N6-0KK">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="selectPYDictFile:" target="4go-iw-qV9" id="6iB-CG-UNU"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qJ3-JX-Al6">
-                        <rect key="frame" x="146" y="365" width="120" height="32"/>
-                        <buttonCell key="cell" type="push" title="保存PY码本" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a5a-te-hBF">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="savePYDictFile:" target="4go-iw-qV9" id="xyq-vs-MTq"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eO9-r9-lMU">
-                        <rect key="frame" x="14" y="332" width="169" height="32"/>
-                        <buttonCell key="cell" type="push" title="PY加入ZMCode" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e93-PM-7J2">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="appendZMCodeForPinYin:" target="4go-iw-qV9" id="7Eu-5A-EAl"/>
+                            <action selector="sortPYDict:" target="4go-iw-qV9" id="PSC-1r-o8D"/>
                         </connections>
                     </button>
                 </subviews>

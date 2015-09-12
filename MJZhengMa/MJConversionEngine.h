@@ -10,15 +10,19 @@
 #import "MJDict.h"
 #import "MJCodeGenerator.h"
 
+typedef struct MJDictIndexNode{
+    NSInteger startIndex;
+    NSInteger endIndex;
+}MJDictIndexNodeType;
+
 @interface MJConversionEngine : NSObject
 
--(NSString*)wordAtDictIndex:(NSInteger)index;
--(NSString*)codeAtDictIndex:(NSInteger)index;
 -(NSString*)fullPunctuationOrSymbolAtIndex:(NSInteger)index;
--(MJDictIndexNodeType*)topLevelIndex;
 
 -(void)creatWord:(NSString*)word;
--(void)adjustFreqForWordAtIndex:(NSInteger)index startIndex:(NSInteger)start;
 
+-(void)adjustFreqForWord:(NSString*)string originString:(NSString*)originString;
+
+- (void)generateCandidates:(NSMutableArray*)candidates andTips:(NSMutableArray*)tips forOriginString:(NSString*)originString;
 -(void)saveDictToFile;
 @end

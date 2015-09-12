@@ -19,26 +19,7 @@ typedef enum CandidatesSelectControl{
 
 
 @interface MJInputController : IMKInputController
-
--(NSMutableString*)composedBuffer;
--(void)setComposedBuffer:(NSString*)string;
--(void)composedBufferAppend:(NSString*)string;
-
--(NSMutableString*)originalBuffer;
--(void)setOriginalBuffer:(NSString*)string;
--(void)originalBufferAppend:(NSString*)string;
-
--(NSMutableString*)wordBuffer;
--(void)setWordBuffer:(NSString*)string;
--(void)wordBufferAppend:(NSString*)string;
-
--(void)resetTransformState:(id)sender;
--(void)resetCreatWordState:(id)sender;
-
--(void)updateMarkedText:(id)sender;
-
--(BOOL)deleteBackward:(id)sender;
--(void)transform:(id)sender;
--(void)triggerCreatWord:(id)sender;
+- (void)activateServer:(id)sender;
+- (void)deactivateServer:(id)sender;
 
 @end

@@ -13,17 +13,17 @@
 #import "MacOS_KeyCode.h"
 
 
-@interface MJInputController (){
-    NSMutableString*                _composedBuffer;
+@implementation MJInputController{
+    
     NSMutableString*                _originalBuffer;
     NSMutableString*                _wordBuffer;
     
-    NSInteger                       _composedCount;
-    NSInteger                       _transformedCount;
+    NSInteger                       _originalCount;
+    NSInteger                       _wordCount;
     
     MJConversionEngine*             _conversionEngine;
     MJCandidatesPanel*              _candidatesPanel;
-    MJDictIndexNodeType*            _currentIndexNode;
+    
     NSMutableArray*                 _candidates;
     NSMutableArray*                 _candidatesTips;
     
@@ -39,28 +39,24 @@
     NSUInteger                       _candidatesShowIndex;
     NSUInteger                       _candidatesSelectedIndex;
 }
-@end
 
-@implementation MJInputController
+
 
 -(id)initWithServer:(IMKServer *)server delegate:(id)delegate client:(id)inputClient {
     self = [super initWithServer:server delegate:delegate client:inputClient];
     if (self) {
-        _composedBuffer = [NSMutableString stringWithString:@""];
         _originalBuffer  = [NSMutableString stringWithString:@""];
+        _originalCount = 0;
         _wordBuffer  = [NSMutableString stringWithString:@""];
-        
-        _composedCount = 0;
-        _transformedCount = 0;
+        _wordCount = 0;
         
         _conversionEngine = [[NSApp delegate] conversionEngine];
         _candidatesPanel = [[NSApp delegate] candidatePanel];
-        _currentIndexNode = [_conversionEngine topLevelIndex];
         
         _candidates = nil;
         _candidatesTips = nil;
         
-        _hasKeyDownBetweenModifier= NO;
+        _hasKeyDownBetweenModifier= YES;
         _isCreatWordMode = NO;
         _isEnglishMode = NO;
         
@@ -73,7 +69,7 @@
 
 -(NSUInteger)recognizedEvents:(id)sender
 {
-    return NSKeyDownMask | NSFlagsChangedMask;
+    return NSKeyDownMask | NSFlagsChangedMask | NSMouseMovedMask;
 }
 
 -(BOOL)handleEvent:(NSEvent*)event client:(id)sender{
@@ -83,12 +79,15 @@
     switch ([event type]) {
         case NSFlagsChanged:
         {
-            NSUInteger changes = modifiers ^ _lastModifier;
-            if (changes == OSX_SHIFT_MASK && !_hasKeyDownBetweenModifier)
+            if (_lastModifier == OSX_SHIFT_MASK && modifiers == 0 && !_hasKeyDownBetweenModifier)
             {
                 _isEnglishMode = _isEnglishMode?NO:YES;
                 _hasKeyDownBetweenModifier = YES;
-                [self commitOrigin:sender];
+                if (_isEnglishMode) {
+                    [_currentClient insertText:_originalBuffer replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                    [self resetCreatWordState];
+                    [self resetTransformState];
+                }
                 handled = YES;
                 break;
             }
@@ -99,7 +98,6 @@
         {
             _hasKeyDownBetweenModifier = YES;
             if (_isEnglishMode) {
-                handled = NO;
                 break;
             }
             if (modifiers & NSCommandKeyMask ||
@@ -107,26 +105,27 @@
                 modifiers & NSAlternateKeyMask ||
                 modifiers & NSAlphaShiftKeyMask)
             {
-                [self resetTransformState:sender];
-                handled = NO;
+                [self resetTransformState];
                 break;
             }
-            if ( modifiers == NSShiftKeyMask && keyCode == OSX_VK_SPACE ) {
-                [self triggerCreatWord:sender];
+            if ( modifiers == NSShiftKeyMask && keyCode == OSX_VK_SPACE && _originalCount == 0) {
+                [self triggerCreatWord];
                 handled = YES;
                 break;
             }
             if( keyCode == OSX_VK_BACK_SPACE )
             {
-                handled = [self deleteBackward:sender];
+                handled = [self deleteBackward];
                 break;
             }
             if( keyCode == OSX_VK_ENTER )
             {
-                if (_transformedCount == 0) {
-                    handled = NO;
-                }else{
-                    [self commitOrigin:sender];
+                if (_isCreatWordMode && _originalCount == 0) {
+                    [self triggerCreatWord];
+                    handled = YES;
+                } else if (_originalCount != 0){
+                    [_currentClient insertText:_originalBuffer replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                    [self resetTransformState];
                     handled = YES;
                 }
                 break;
@@ -136,64 +135,63 @@
 
             if ([scanner scanCharactersFromSet:[NSCharacterSet lowercaseLetterCharacterSet] intoString:nil])
             {//小写字母
-                if (modifiers == NSShiftKeyMask) {
-                    _isEnglishMode = YES;
-                    if (_transformedCount != 0) {
-                        [self commitComposition:sender];
+                if (_candidatesCount == 0) {
+                    [self setOriginalBuffer:keyChars];
+                }else if (_candidatesCount == 1) {
+                    if (_isCreatWordMode) {
+                        [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
+                    } else {
+                        [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
                     }
-                    handled = NO;
+                    [self setOriginalBuffer:keyChars];
                 }else{
                     [self originalBufferAppend:keyChars];
-                    [self transform:sender];
-                    handled = YES;
                 }
-                break;
+                [self updateCandidatesForNew:YES];
+                handled = YES;
             }else if ( [scanner scanCharactersFromSet:[NSCharacterSet uppercaseLetterCharacterSet] intoString:nil] )
             {//大写字母：进入英文模式
                 _isEnglishMode = YES;
-                if (_transformedCount != 0) {
-                    [self commitComposition:sender];
-                }
-                handled = NO;
-                break;
-            }else if( [keyChars isEqual: @" "] )
+                [self resetTransformState];
+            }else if(keyCode == OSX_VK_SPACE)
             {//空格
-                if ( _transformedCount == 0 )
+                if(_originalCount != 0 && _candidatesCount != 0)
                 {
-                    handled = NO;
-                    break;
-                }else
-                {
-                    [self commitComposition:_currentClient];
+                    if (_isCreatWordMode) {
+                        [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
+                    } else {
+                        [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                    }
+                    [self resetTransformState];
                     handled = YES;
-                    break;
                 }
             }else if ([scanner scanCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil]){//数字键
                 
                 unichar achar = [keyChars characterAtIndex:0];
-                NSUInteger count = MIN(_candidatesCount - _candidatesShowIndex,9);
-                if (_transformedCount != 0 && achar >= '1' && achar <= '0' + count){
-                    [self MJcandidateSelected:(achar - '1')];
+                NSUInteger count = MIN(_candidatesCount,9);
+                if (_originalCount != 0) {
+                    if (_candidatesCount != 0 && achar >= '1' && achar <= '0' + count){
+                        [self MJcandidateSelected:(achar - '1')];
+                    }
                     handled = YES;
-                    break;
-                }else{
-                    handled = NO;
-                    break;
                 }
             }else if ( [scanner scanCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:nil] ||
                       [scanner scanCharactersFromSet:[NSCharacterSet symbolCharacterSet] intoString:nil])
             {//标点符号
-                unichar achar = [keyChars characterAtIndex:0];
-                if (_transformedCount != 0 && achar == '-'){
+                if (_candidatesCount != 0 && keyCode == OSX_VK_MINUS){
                     [self MJcandidateSelectionChanged:PAGE_PRE];
                     handled = YES;
-                    break;
-                }else if (_transformedCount != 0 && achar == '='){
+                }else if (_candidatesCount != 0 && keyCode == OSX_VK_EQUALS){
                     [self MJcandidateSelectionChanged:PAGE_NEXT];
                     handled = YES;
-                    break;
                 }else{
-                    [self commitComposition:_currentClient];
+                    if (_isCreatWordMode) {
+                        [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
+                        break;
+                    } else {
+                        [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                    }
+                    [self resetTransformState];
                     NSInteger index;
                     if ( modifiers & NSShiftKeyMask){
                         index = keyCode - 18;
@@ -201,19 +199,20 @@
                         index = keyCode + 9;
                     }
                     NSString* puncOrSymbol = [_conversionEngine fullPunctuationOrSymbolAtIndex:index];
-                    if ([puncOrSymbol isNotEqualTo:@"0"]) {
-                        [sender insertText:puncOrSymbol replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                    if (![puncOrSymbol isEqualToString:@"0"]) {
+                        [_currentClient insertText:puncOrSymbol replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
                         handled = YES;
-                        break;
                     }
-                    handled = NO;
-                    break;
                 }
             }else{
-                [self resetTransformState:sender];
+                [self resetTransformState];
                 handled = NO;
-                break;
             }
+            break;
+        }
+        case NSMouseMoved:{
+            _hasKeyDownBetweenModifier = YES;
+            break;
         }
         default:
             handled = NO;
@@ -223,121 +222,77 @@
     return handled;
 }
 
--(void)commitOrigin:(id)sender{
-
-    NSString* text = [self originalBuffer];
-    if ( ![text isEqualToString:@""] ){
-        [sender insertText:text replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
-        if (_isCreatWordMode) {
-            [self resetCreatWordState:sender];
-        }
-        [self resetTransformState:sender];
-    }
-}
-    
--(void)commitComposition:(id)sender
-{
-
-    if (_currentIndexNode != [_conversionEngine topLevelIndex]){
-        [self composedBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
-    }
-    NSString* text = [self composedBuffer];
-    if ( ![text isEqualToString:@""] ){
-        [sender insertText:text replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
-        if (_isCreatWordMode) {
-            [self wordBufferAppend:text];
-        }
-        [self resetTransformState:sender];
-    }
-}
-
--(void)triggerCreatWord:(id)sender
+-(void)triggerCreatWord
 {
     if (_isCreatWordMode) {
-        [self commitComposition:sender];
         NSString* word = [self wordBuffer];
+        [_currentClient insertText:word replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
         if ( ![word isEqualToString:@""] ) {
             [_conversionEngine creatWord:word];
         }
-        [self resetCreatWordState:sender];
-        [self resetTransformState:sender];
+        [self resetCreatWordState];
+        [self resetTransformState];
     }else{
-        [self resetTransformState:sender];
+        [self resetTransformState];
         _isCreatWordMode = YES;
     }
 }
-
--(NSMutableString*)composedBuffer;{
-    return _composedBuffer;
-}
--(void)setComposedBuffer:(NSString*)string{
-    [[self composedBuffer] setString:string];
-}
--(void)composedBufferAppend:(NSString*)string{
-    [[self composedBuffer] appendString: string];
-}
-
 
 -(NSMutableString*)originalBuffer{
     return _originalBuffer;
 }
 -(void)setOriginalBuffer:(NSString*)string{
-    [[self originalBuffer] setString:string];
+    [_originalBuffer setString:string];
+    _originalCount = [_originalBuffer length];
 }
 -(void)originalBufferAppend:(NSString*)string{
-    [[self originalBuffer] appendString: string];
+    [_originalBuffer appendString: string];
+    _originalCount = [_originalBuffer length];
 }
 
 -(NSMutableString*)wordBuffer{
     return _wordBuffer;
 }
 -(void)setWordBuffer:(NSString*)string{
-    [[self wordBuffer] setString:string];
+    [_wordBuffer setString:string];
+    _wordCount = [_wordBuffer length];
 }
 -(void)wordBufferAppend:(NSString*)string{
-    [[self wordBuffer] appendString: string];
+    [_wordBuffer appendString: string];
+    _wordCount = [_wordBuffer length];
 }
 
-- (BOOL)deleteBackward:(id)sender
+- (BOOL)deleteBackward
 {
-    NSMutableString*        originalText = [self originalBuffer];
-    NSInteger   orgLength = [originalText length];
-    
-    if (orgLength > 0) {
-        [originalText deleteCharactersInRange:NSMakeRange(orgLength-1,1)];
-        [self setComposedBuffer:@""];
-        _transformedCount = 0;
-        _composedCount = 0;
-        _currentIndexNode = [_conversionEngine topLevelIndex];
-        if (orgLength == 1){
-            [_candidatesPanel hide];
-            [sender setMarkedText:@"" selectionRange:NSMakeRange(0,0) replacementRange:NSMakeRange(NSNotFound,NSNotFound)];
-        }else
-            [self transform:sender];
+    if (_originalCount > 0) {
+        [_originalBuffer deleteCharactersInRange:NSMakeRange(_originalCount-1,1)];
+        _originalCount --;
+        if (_originalCount == 0){
+            [self resetTransformState];
+        }else{
+            [self updateCandidatesForNew:YES];
+        }
         return YES;
-    }else {
-        NSMutableString* wordText = [self wordBuffer];
-        NSInteger wordLength = [wordText length];
-        if( wordLength > 0 )
-            [wordText deleteCharactersInRange:NSMakeRange(wordLength-1,1)];
-        return NO;
+    }else if( _wordCount > 0 ){
+        [_wordBuffer deleteCharactersInRange:NSMakeRange(_wordCount-1,1)];
+        _wordCount--;
+        [self updateMarkedText];
+        return YES;
     }
+    return NO;
 }
 
--(void)updateMarkedText:(id)sender{
-    NSString*        composedText = [self composedBuffer];
-    NSString*        originalText = [self originalBuffer];
-    NSString*        text = [NSString stringWithFormat:@"%@%@",composedText,[originalText substringFromIndex:_composedCount],nil];
-    [sender setMarkedText:text selectionRange:NSMakeRange(NSNotFound,NSNotFound) replacementRange:NSMakeRange(NSNotFound,NSNotFound)];
+-(void)updateMarkedText{
+    NSMutableString* text = [NSMutableString stringWithString:@""];
+    if(_isCreatWordMode){
+        [text appendString:_wordBuffer];
+    }
+    [text appendString:_originalBuffer];
+    [_currentClient setMarkedText:text selectionRange:NSMakeRange(NSNotFound,NSNotFound) replacementRange:NSMakeRange(NSNotFound,NSNotFound)];
 }
 
--(void)resetTransformState:(id)sender{
-    [self setComposedBuffer:@""];
+-(void)resetTransformState{
     [self setOriginalBuffer:@""];
-    _composedCount = 0;
-    _transformedCount = 0;
-    _currentIndexNode = [_conversionEngine topLevelIndex];
-    _currentClient = sender;
     
     _candidates = nil;
     _candidatesTips = nil;
@@ -348,97 +303,31 @@
     _candidatesShowIndex = 0;
     _candidatesSelectedIndex = 0;
     
-    [self updateMarkedText:sender];
     [_candidatesPanel hide];
+    [self updateMarkedText];
 }
--(void)resetCreatWordState:(id)sender{
+
+-(void)resetCreatWordState{
     [self setWordBuffer:@""];
     _isCreatWordMode = NO;
 }
 
--(void)transform:(id)sender{
-    NSString*   originalText = [self originalBuffer];
-    NSInteger   orgLength = [originalText length];
-    while ( _transformedCount < orgLength )
-    {
-        unichar achar = [originalText characterAtIndex:_transformedCount];
-        MJDictIndexNodeType* nextIndexNode = [_currentIndexNode nextLevelIndexNode:achar - 'a'];
-        if ( [nextIndexNode indexCount]  == 1 )
-        {
-            [self composedBufferAppend:[_conversionEngine wordAtDictIndex:[nextIndexNode indexStart]]];
-            _currentIndexNode = [_conversionEngine topLevelIndex];
-            _composedCount = _transformedCount + 1;
-        }else if( nextIndexNode == nil )
-        {
-            [self composedBufferAppend:[_conversionEngine wordAtDictIndex:[_currentIndexNode indexStart]]];
-            _composedCount = _transformedCount;
-            _currentIndexNode = [_conversionEngine topLevelIndex];
-            _transformedCount --;
-        }else
-        {
-            _currentIndexNode = nextIndexNode;
-        }
-        _transformedCount ++;
-    }
-    [self updateMarkedText:_currentClient];
-    if (_composedCount == _transformedCount){
-        //All composed, hide candidatesWindow
-        [_candidatesPanel hide];
-    }else{
-        [self updateCandidates:YES];
-    }
-}
-- (void)updateCandidates:(Boolean)generateNewCandidates{
+
+- (void)updateCandidatesForNew:(Boolean)generateNewCandidates{
     if (generateNewCandidates) {
+        [self updateMarkedText];
         _candidatesTips = [NSMutableArray arrayWithCapacity:0];
         _candidates = [NSMutableArray arrayWithCapacity:0];
-        [self generateCandidates:_candidates andTips:_candidatesTips];
+        [_conversionEngine generateCandidates:_candidates andTips:_candidatesTips forOriginString:_originalBuffer];
         _candidatesSelectedIndex = 0;
         _candidatesShowIndex = 0;
+        _candidatesCount = [_candidates count];
     }
     [_currentClient attributesForCharacterIndex:0 lineHeightRectangle:&_inputPos] ;
     NSArray* candidates = [_candidates subarrayWithRange:NSMakeRange(_candidatesShowIndex, MIN(_candidatesCount - _candidatesShowIndex,9))];
     NSArray* tips = [_candidatesTips subarrayWithRange:NSMakeRange(_candidatesShowIndex, MIN(_candidatesCount - _candidatesShowIndex,9))];
 
     [_candidatesPanel updateCandidates:candidates withTips:tips atPosition:_inputPos selectIndex:_candidatesSelectedIndex - _candidatesShowIndex];
-}
-- (void)generateCandidates:(NSMutableArray*)candidates andTips:(NSMutableArray*)tips
-{
-    NSInteger level = [_currentIndexNode indexLevel];
-    NSInteger begin = [_currentIndexNode indexStart];
-    NSInteger end = [_currentIndexNode indexEnd];
-    if(level == 1 ){
-        for (NSInteger i=begin ; i<=end ; ++i)
-        {
-            if ([[_conversionEngine codeAtDictIndex:i] length] == level) {
-                [candidates addObject:[_conversionEngine wordAtDictIndex:i]];
-                [tips addObject:@""];
-            }else{
-                break;
-            }
-        }
-        for (NSInteger i=0 ; i<26 ; ++i)
-        {
-            if ([_currentIndexNode nextLevelIndexNode:i] != nil) {
-                NSInteger index = [[_currentIndexNode nextLevelIndexNode:i] indexStart];
-                [candidates addObject:[_conversionEngine wordAtDictIndex:index]];
-                [tips addObject:[NSString stringWithFormat:@"[%@]",[[_conversionEngine codeAtDictIndex:index]substringWithRange:NSMakeRange(level, 1)]]];
-            }
-        }
-    }else{
-        for (NSInteger i=begin ; i<=end ; ++i)
-        {
-            [candidates addObject:[_conversionEngine wordAtDictIndex:i]];
-            if ([[_conversionEngine codeAtDictIndex:i] length] == level) {
-                [tips addObject:@""];
-            }else{
-                [tips addObject:[NSString stringWithFormat:@"[%@]",[[_conversionEngine codeAtDictIndex:i]substringWithRange:NSMakeRange(level, 1)]]];
-            }
-        }
-    }
-    _candidatesCount = [candidates count];
-
-
 }
 
 -(void)MJcandidateSelectionChanged:(CandidatesSelectChangeType)control{
@@ -484,42 +373,31 @@
     }
 
     if (currentShowIndex != _candidatesShowIndex || currentSelectIndex != _candidatesSelectedIndex) {
-        [self updateCandidates:NO];
+        [self updateCandidatesForNew:NO];
     }
 }
 -(void)MJcandidateSelected:(NSUInteger)index{
     _candidatesSelectedIndex = _candidatesShowIndex + index;
-
     NSString* candidateString = [_candidates objectAtIndex:_candidatesSelectedIndex];
-    NSInteger start = [_currentIndexNode indexStart];
-    NSInteger end = [_currentIndexNode indexEnd];
-    NSInteger level = [_currentIndexNode indexLevel];
-    NSInteger i = start;
-    while( i < end )
-    {
-        if([[_conversionEngine wordAtDictIndex:i] isEqual:candidateString]){
-            break;
-        }
-        if([[_conversionEngine codeAtDictIndex:i] length] > level){
-            break;
-        }
-        ++i;
+    if (_isCreatWordMode) {
+        [self wordBufferAppend:candidateString];
+    } else {
+        [_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
     }
-    if ( [[_conversionEngine wordAtDictIndex:i] isEqualToString:candidateString]
-        && [[_conversionEngine codeAtDictIndex:i] length] == level )
-    {
-        [_conversionEngine adjustFreqForWordAtIndex:i startIndex:start];
+    if (_originalCount > 2 && _originalCount < 5) {
+        [_conversionEngine adjustFreqForWord:candidateString originString:_originalBuffer];
     }
-    [self commitComposition:_currentClient];
+    [self resetTransformState];
 }
 
 - (void)activateServer:(id)sender
 {
-    [self resetTransformState:sender];
+    _currentClient = sender;
+    [self resetTransformState];
 }
 - (void)deactivateServer:(id)sender
 {
-    [self resetTransformState:sender];
+    [self resetTransformState];
     [_conversionEngine saveDictToFile];
 }
 @end

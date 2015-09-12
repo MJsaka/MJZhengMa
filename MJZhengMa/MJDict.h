@@ -9,19 +9,21 @@
 #import <Foundation/Foundation.h>
 
 @interface MJXMDict : NSObject
-@property (strong) NSString* codeString;
-@property (strong) NSString* wordString;
-@property (assign) double wordFrequency;
+@property (nonatomic,copy) NSString* codeString;
+@property (nonatomic,copy) NSString* wordString;
+@property (nonatomic,assign) double wordFrequency;
+@end
+
+@interface MJENDict : NSObject
+@property (nonatomic,copy) NSString* codeString;
+@property (nonatomic,copy) NSString* wordString;
+@property (nonatomic,assign) double wordFrequency;
 @end
 
 @interface MJPYDict : MJXMDict
 
-@property (strong) NSString* xmCodeString;
+@property (nonatomic,copy) NSString* xmCodeString;
 @end
 
-@interface MJDictIndexNodeType : NSObject
-@property (assign) NSInteger indexStart;
-@property (assign) NSInteger indexEnd;
-@end
 
 

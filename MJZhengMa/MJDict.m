@@ -11,9 +11,12 @@
 
 @end
 
+@implementation MJENDict
+
+@end
+
 @implementation MJPYDict : MJXMDict
 
 @end
-@implementation MJDictIndexNodeType
 
-@end
+
