@@ -89,8 +89,6 @@
             }else if(findStartIndex && ![str isEqualToString:string]){
                 findEndIndex = YES;
                 _currentIndex[1].endIndex = i - 1;
-            }else if([str length] > length){
-                findEndIndex = YES;
             }
         }
         if (!findStartIndex) {
