@@ -23,6 +23,7 @@ typedef struct MJDictIndexNode{
 
 -(void)adjustFreqForWord:(NSString*)string originString:(NSString*)originString;
 
-- (void)generateCandidates:(NSMutableArray*)candidates andTips:(NSMutableArray*)tips forOriginString:(NSString*)originString;
+- (void)generateCandidates:(NSMutableArray*)candidates andTips:(NSMutableArray*)tips andCandidatesClass:(NSMutableArray*)candidatesClasses forOriginString:(NSString*)originString;
+
 -(void)saveDictToFile;
 @end

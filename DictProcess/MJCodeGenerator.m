@@ -57,8 +57,7 @@
     NSString* wordString = dict.wordString;
     NSString* wordFreqString = [_ZMDanZiCiPinDict objectForKey:wordString];
     if (wordFreqString != nil ) {
-        double freq = [wordFreqString doubleValue];
-        dict.wordFrequency = freq;
+        dict.wordFrequency = [wordFreqString doubleValue];
         return YES;
     }else{
         return NO;
@@ -84,8 +83,8 @@
     }else if ( wordLength == 3 ) {
         [codeString appendFormat:@"%@%@%@",
          [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(0, 1)]] substringWithRange:NSMakeRange(0, 1)],
-         [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(1, 1)]] substringWithRange:NSMakeRange(0, 1)],
-         [_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(2, 1)]]];
+         [_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(1, 1)]],
+         [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(2, 1)]] substringWithRange:NSMakeRange(0, 1)]];
     }else {
         [codeString appendFormat:@"%@%@%@%@",
          [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(0, 1)]] substringWithRange:NSMakeRange(0, 1)],

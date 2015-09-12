@@ -26,6 +26,7 @@
     
     NSMutableArray*                 _candidates;
     NSMutableArray*                 _candidatesTips;
+    NSMutableArray*                 _candidatesClasses;
     
     id                              _currentClient;
     NSRect                          _inputPos;
@@ -55,6 +56,7 @@
         
         _candidates = nil;
         _candidatesTips = nil;
+        
         
         _hasKeyDownBetweenModifier= YES;
         _isCreatWordMode = NO;
@@ -130,37 +132,51 @@
                 }
                 break;
             }
+            if ( keyCode == OSX_VK_ESCAPE && _originalCount != 0){
+                [self resetTransformState];
+                break;
+            }
+            if (_candidatesCount != 0){
+                if (keyCode == OSX_VK_PAGE_UP || keyCode == OSX_VK_LEFT || keyCode == OSX_VK_MINUS){
+                    [self MJcandidateSelectionChanged:PAGE_PRE];
+                    handled = YES;
+                    break;
+                }else if (keyCode == OSX_VK_PAGE_DOWN || keyCode == OSX_VK_RIGHT || keyCode == OSX_VK_EQUALS){
+                    [self MJcandidateSelectionChanged:PAGE_NEXT];
+                    handled = YES;
+                    break;
+                }else if (keyCode == OSX_VK_UP){
+                    [self MJcandidateSelectionChanged:SELECTION_PRE];
+                    handled = YES;
+                    break;
+                }else if (keyCode == OSX_VK_DOWN){
+                    [self MJcandidateSelectionChanged:SELECTION_NEXT];
+                    handled = YES;
+                    break;
+                }
+            }
             NSString* keyChars = [event charactersIgnoringModifiers];
             NSScanner* scanner = [NSScanner scannerWithString:keyChars];
 
             if ([scanner scanCharactersFromSet:[NSCharacterSet lowercaseLetterCharacterSet] intoString:nil])
             {//小写字母
-                if (_candidatesCount == 0) {
-                    [self setOriginalBuffer:keyChars];
-                }else if (_candidatesCount == 1) {
-                    if (_isCreatWordMode) {
-                        [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
-                    } else {
-                        [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
-                    }
-                    [self setOriginalBuffer:keyChars];
+                [self originalBufferAppend:keyChars];
+                if (_candidatesCount == 0 && _originalCount != 1) {
+                    [self updateMarkedText];
                 }else{
-                    [self originalBufferAppend:keyChars];
+                    [self updateCandidatesForNew:YES];
                 }
-                [self updateCandidatesForNew:YES];
                 handled = YES;
-            }else if ( [scanner scanCharactersFromSet:[NSCharacterSet uppercaseLetterCharacterSet] intoString:nil] )
-            {//大写字母：进入英文模式
-                _isEnglishMode = YES;
-                [self resetTransformState];
             }else if(keyCode == OSX_VK_SPACE)
             {//空格
-                if(_originalCount != 0 && _candidatesCount != 0)
+                if(_originalCount != 0)
                 {
-                    if (_isCreatWordMode) {
-                        [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
-                    } else {
-                        [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                    if (_candidatesCount != 0) {
+                        if (_isCreatWordMode) {
+                            [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
+                        } else {
+                            [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+                        }
                     }
                     [self resetTransformState];
                     handled = YES;
@@ -178,20 +194,7 @@
             }else if ( [scanner scanCharactersFromSet:[NSCharacterSet punctuationCharacterSet] intoString:nil] ||
                       [scanner scanCharactersFromSet:[NSCharacterSet symbolCharacterSet] intoString:nil])
             {//标点符号
-                if (_candidatesCount != 0 && keyCode == OSX_VK_MINUS){
-                    [self MJcandidateSelectionChanged:PAGE_PRE];
-                    handled = YES;
-                }else if (_candidatesCount != 0 && keyCode == OSX_VK_EQUALS){
-                    [self MJcandidateSelectionChanged:PAGE_NEXT];
-                    handled = YES;
-                }else{
-                    if (_isCreatWordMode) {
-                        [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
-                        break;
-                    } else {
-                        [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
-                    }
-                    [self resetTransformState];
+                if (_originalCount == 0) {
                     NSInteger index;
                     if ( modifiers & NSShiftKeyMask){
                         index = keyCode - 18;
@@ -201,9 +204,9 @@
                     NSString* puncOrSymbol = [_conversionEngine fullPunctuationOrSymbolAtIndex:index];
                     if (![puncOrSymbol isEqualToString:@"0"]) {
                         [_currentClient insertText:puncOrSymbol replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
-                        handled = YES;
                     }
                 }
+                handled = YES;
             }else{
                 [self resetTransformState];
                 handled = NO;
@@ -318,16 +321,30 @@
         [self updateMarkedText];
         _candidatesTips = [NSMutableArray arrayWithCapacity:0];
         _candidates = [NSMutableArray arrayWithCapacity:0];
-        [_conversionEngine generateCandidates:_candidates andTips:_candidatesTips forOriginString:_originalBuffer];
+        _candidatesClasses = [NSMutableArray arrayWithCapacity:0];
+        [_conversionEngine generateCandidates:_candidates andTips:_candidatesTips andCandidatesClass:_candidatesClasses forOriginString:_originalBuffer];
         _candidatesSelectedIndex = 0;
         _candidatesShowIndex = 0;
         _candidatesCount = [_candidates count];
     }
+    if (_candidatesCount == 0) {
+        [_candidatesPanel hide];
+        return;
+    }else if (_candidatesCount == 1 && _originalCount == 4){
+        if (_isCreatWordMode) {
+            [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
+        } else {
+            [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
+        }
+        [self resetTransformState];
+        return;
+    }
     [_currentClient attributesForCharacterIndex:0 lineHeightRectangle:&_inputPos] ;
     NSArray* candidates = [_candidates subarrayWithRange:NSMakeRange(_candidatesShowIndex, MIN(_candidatesCount - _candidatesShowIndex,9))];
     NSArray* tips = [_candidatesTips subarrayWithRange:NSMakeRange(_candidatesShowIndex, MIN(_candidatesCount - _candidatesShowIndex,9))];
+    NSArray* classes = [_candidatesClasses subarrayWithRange:NSMakeRange(_candidatesShowIndex, MIN(_candidatesCount - _candidatesShowIndex,9))];
 
-    [_candidatesPanel updateCandidates:candidates withTips:tips atPosition:_inputPos selectIndex:_candidatesSelectedIndex - _candidatesShowIndex];
+    [_candidatesPanel updateCandidates:candidates withTips:tips withClasses:classes atPosition:_inputPos selectIndex:_candidatesSelectedIndex - _candidatesShowIndex];
 }
 
 -(void)MJcandidateSelectionChanged:(CandidatesSelectChangeType)control{
@@ -384,7 +401,7 @@
     } else {
         [_currentClient insertText:candidateString replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
     }
-    if (_originalCount > 2 && _originalCount < 5) {
+    if (_originalCount > 2 && _originalCount < 5 && [_candidatesClasses objectAtIndex:_candidatesSelectedIndex] == [MJXMDict class]) {
         [_conversionEngine adjustFreqForWord:candidateString originString:_originalBuffer];
     }
     [self resetTransformState];

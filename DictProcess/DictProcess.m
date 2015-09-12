@@ -38,11 +38,11 @@
 
 
 -(IBAction)generateCodeForXMDict:(id)sender{
-    NSMutableArray* array = [_dictStringTransformer xmDictArrayFromString:_stringOfTextFile hasCode:NO hasWord:YES hasFreq:YES];
+    NSMutableArray* array = [_dictStringTransformer xmDictArrayFromString:_stringOfTextFile hasCode:YES hasWord:YES hasFreq:YES];
     for (NSInteger i = 0; i < [array count]; ++i) {
-        if ( ![codeGenerator generateCodeForDictElement:[array objectAtIndex:i]] ) {
-            [array removeObjectAtIndex:i];
-            --i;
+        MJXMDict* dict = [array objectAtIndex:i];
+        if ([[dict wordString] length] == 3) {
+            [codeGenerator generateCodeForDictElement:dict];
         }
     }
     _stringOfDictFile = [_dictStringTransformer stringFromMJDictArray:array hasCode:YES hasWord:YES hasFreq:YES hasXMCode:NO];

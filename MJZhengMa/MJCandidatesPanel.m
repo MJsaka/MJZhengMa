@@ -236,7 +236,7 @@ static const double kAlpha = 1.0;
 }
 
 
--(void)updateCandidates:(NSArray*)candidates withTips:(NSArray *)tips atPosition:(NSRect)position selectIndex:(NSInteger)index{
+-(void)updateCandidates:(NSArray*)candidates withTips:(NSArray *)tips withClasses:(NSArray *)classes atPosition:(NSRect)position selectIndex:(NSInteger)index{
     _positionRect = position;
     NSInteger _numCandidates = [candidates count];
     NSMutableAttributedString* text = [[NSMutableAttributedString alloc] init];

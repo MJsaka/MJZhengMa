@@ -115,6 +115,16 @@
                             <action selector="sortPYDict:" target="4go-iw-qV9" id="PSC-1r-o8D"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqa-Ve-w4X">
+                        <rect key="frame" x="180" y="424" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="GenerateXMcode" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hBU-Qh-V0d">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="generateCodeForXMDict:" target="4go-iw-qV9" id="ij1-xR-G42"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="354" y="329.5"/>

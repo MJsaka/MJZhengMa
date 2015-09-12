@@ -124,7 +124,7 @@
 
 
 
-- (void)generateCandidates:(NSMutableArray*)candidates andTips:(NSMutableArray*)tips forOriginString:(NSString *)originString
+- (void)generateCandidates:(NSMutableArray*)candidates andTips:(NSMutableArray*)tips andCandidatesClass:(NSMutableArray *)candidatesClasses forOriginString:(NSString *)originString
 {
     [self findIndexOfInputString:originString];
 //    NSLog(@"xm...start:%ld,end:%ld\npy...start:%ld,end:%ld\neng...start:%ld,end:%ld",_currentIndex[0].startIndex,_currentIndex[0].endIndex,_currentIndex[1].startIndex,_currentIndex[1].endIndex,_currentIndex[2].startIndex,_currentIndex[2].endIndex);
@@ -133,6 +133,7 @@
         while([[[_xmDictArray objectAtIndex:_currentIndex[0].startIndex] codeString] length] == [originString length] && _currentIndex[0].startIndex <= _currentIndex[0].endIndex) {
             [candidates addObject:[[_xmDictArray objectAtIndex:_currentIndex[0].startIndex] wordString]];
             [tips addObject:@""];
+            [candidatesClasses addObject:[MJXMDict class]];
             _currentIndex[0].startIndex++;
         }
     }
@@ -148,12 +149,15 @@
     for (NSInteger i = 0; i < [array count]; ++i) {
         [candidates addObject:[[array objectAtIndex:i] wordString]];
         if ([[array objectAtIndex:i] class] == [MJXMDict class]) {
+            [candidatesClasses addObject:[MJXMDict class]];
             if ([originString length] < 4) {
                 [tips addObject:[NSString stringWithFormat:@"[%c]",[[[array objectAtIndex:i] codeString] characterAtIndex:[originString length]]]];
             }
         }else if ([[array objectAtIndex:i] class] == [MJENDict class]){
+            [candidatesClasses addObject:[MJENDict class]];
             [tips addObject:@""];
         }else{
+            [candidatesClasses addObject:[MJPYDict class]];
             [tips addObject:[NSString stringWithFormat:@":%@",[[array objectAtIndex:i] xmCodeString]]];
         }
     }

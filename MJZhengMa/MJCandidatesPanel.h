@@ -80,7 +80,7 @@
 }
 
 -(void)hide;
--(void)updateCandidates:(NSArray*)candidates withTips:(NSArray*)tips atPosition:(NSRect)position selectIndex:(NSInteger)index;
+-(void)updateCandidates:(NSArray*)candidates withTips:(NSArray*)tips withClasses:(NSArray*)classes atPosition:(NSRect)position selectIndex:(NSInteger)index;
 
 -(void)updateUIStyle:(MJUIStyle*)style;
 
