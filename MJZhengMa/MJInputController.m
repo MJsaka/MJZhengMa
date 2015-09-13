@@ -56,9 +56,10 @@
         
         _candidates = nil;
         _candidatesTips = nil;
-        
+        _candidatesClasses = nil;
         
         _hasKeyDownBetweenModifier= YES;
+        _lastModifier = 0;
         _isCreatWordMode = NO;
         _isEnglishMode = NO;
         
@@ -134,6 +135,7 @@
             }
             if ( keyCode == OSX_VK_ESCAPE && _originalCount != 0){
                 [self resetTransformState];
+                handled = YES;
                 break;
             }
             if (_candidatesCount != 0){
@@ -177,6 +179,8 @@
                         } else {
                             [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
                         }
+                    }else{
+                        [_currentClient insertText:_originalBuffer replacementRange:NSMakeRange(NSNotFound, NSNotFound)]
                     }
                     [self resetTransformState];
                     handled = YES;
@@ -299,8 +303,12 @@
     
     _candidates = nil;
     _candidatesTips = nil;
+    _candidatesClasses = nil;
     
+    _hasKeyDownBetweenModifier= YES;
     _lastModifier = 0;
+    _isCreatWordMode = NO;
+    _isEnglishMode = NO;
     
     _candidatesCount = 0;
     _candidatesShowIndex = 0;
