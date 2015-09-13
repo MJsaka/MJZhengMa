@@ -180,7 +180,7 @@
                             [_currentClient insertText:[_candidates objectAtIndex:_candidatesSelectedIndex] replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
                         }
                     }else{
-                        [_currentClient insertText:_originalBuffer replacementRange:NSMakeRange(NSNotFound, NSNotFound)]
+                        [_currentClient insertText:_originalBuffer replacementRange:NSMakeRange(NSNotFound, NSNotFound)];
                     }
                     [self resetTransformState];
                     handled = YES;
