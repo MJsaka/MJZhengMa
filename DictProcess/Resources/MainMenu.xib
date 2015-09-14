@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jnT-a9-KGK">
-                        <rect key="frame" x="14" y="495" width="153" height="32"/>
+                        <rect key="frame" x="14" y="495" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="Select Text" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aA1-zS-S1P">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -56,7 +56,7 @@
                         </scroller>
                     </scrollView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ut6-wF-DBI">
-                        <rect key="frame" x="14" y="462" width="153" height="32"/>
+                        <rect key="frame" x="190" y="457" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="GeneratePYArray" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Qgv-oJ-pDh">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -66,17 +66,17 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eO9-r9-lMU">
-                        <rect key="frame" x="180" y="462" width="169" height="32"/>
+                        <rect key="frame" x="14" y="424" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="AddXMCodeForPY" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e93-PM-7J2">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="appendXMCodeForPY:" target="4go-iw-qV9" id="YQY-xU-cHt"/>
+                            <action selector="addXMCodeForPY:" target="4go-iw-qV9" id="4St-rT-oba"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQE-eu-md2">
-                        <rect key="frame" x="180" y="495" width="169" height="32"/>
+                        <rect key="frame" x="14" y="457" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="Save DictString" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bi4-ib-Oc7">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -86,7 +86,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jeh-Gx-RxO">
-                        <rect key="frame" x="364" y="495" width="169" height="32"/>
+                        <rect key="frame" x="190" y="495" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="GenerateXMArray" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bOb-k5-XyN">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -96,7 +96,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pjO-3m-bax">
-                        <rect key="frame" x="364" y="462" width="169" height="32"/>
+                        <rect key="frame" x="364" y="495" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="SortXMDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WYK-gk-Q2b">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -105,8 +105,38 @@
                             <action selector="sortXMDict:" target="4go-iw-qV9" id="rem-I6-GAc"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqa-Ve-w4X">
+                        <rect key="frame" x="190" y="424" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="AddCodeForXMDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hBU-Qh-V0d">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <connections>
+                                <action selector="addCodeForXMDict:" target="4go-iw-qV9" id="y0g-vu-app"/>
+                            </connections>
+                        </buttonCell>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S0b-6O-FhG">
+                        <rect key="frame" x="14" y="391" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="AddFreqForXMDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="d3I-yq-lm6">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="addFreqForXMDict:" target="4go-iw-qV9" id="Wjv-jC-Rgb"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tNp-I8-XSt">
+                        <rect key="frame" x="190" y="391" width="169" height="32"/>
+                        <buttonCell key="cell" type="push" title="DelDupForEngDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="iUd-yR-4Hp">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="delDupForEngDict:" target="4go-iw-qV9" id="KsC-ZC-FJt"/>
+                        </connections>
+                    </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pPd-3l-j9V">
-                        <rect key="frame" x="364" y="424" width="169" height="32"/>
+                        <rect key="frame" x="364" y="457" width="169" height="32"/>
                         <buttonCell key="cell" type="push" title="SortPYDict" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ISF-N6-0KK">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -115,19 +145,9 @@
                             <action selector="sortPYDict:" target="4go-iw-qV9" id="PSC-1r-o8D"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eqa-Ve-w4X">
-                        <rect key="frame" x="180" y="424" width="169" height="32"/>
-                        <buttonCell key="cell" type="push" title="GenerateXMcode" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hBU-Qh-V0d">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="generateCodeForXMDict:" target="4go-iw-qV9" id="ij1-xR-G42"/>
-                        </connections>
-                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="354" y="329.5"/>
+            <point key="canvasLocation" x="264" y="327.5"/>
         </window>
         <customObject id="4go-iw-qV9" customClass="DictProcess">
             <connections>

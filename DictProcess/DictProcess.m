@@ -37,7 +37,7 @@
 }
 
 
--(IBAction)generateCodeForXMDict:(id)sender{
+-(IBAction)addCodeForXMDict:(id)sender{
     NSMutableArray* array = [_dictStringTransformer xmDictArrayFromString:_stringOfTextFile hasCode:YES hasWord:YES hasFreq:YES];
     for (NSInteger i = 0; i < [array count]; ++i) {
         MJXMDict* dict = [array objectAtIndex:i];
@@ -64,7 +64,19 @@
     [_textView setString:_stringOfDictFile];
 }
 
--(IBAction)appendFreqForXMDict:(id)sender{
+-(IBAction)delDupForEngDict:(id)sender{
+    
+    NSMutableArray* array = [_dictStringTransformer xmDictArrayFromString:_stringOfTextFile hasCode:YES hasWord:YES hasFreq:YES];
+    for (NSInteger i = 0; i < [array count]; ++i) {
+        while (i+1 < [array count] &&[[[array objectAtIndex:i] codeString] isEqualToString:[[array objectAtIndex:i+1] codeString]]) {
+            [array removeObjectAtIndex:i+1];
+        }
+    }
+    _stringOfDictFile = [_dictStringTransformer stringFromMJDictArray:array hasCode:YES hasWord:YES hasFreq:YES hasXMCode:NO];
+    [_textView setString:_stringOfDictFile];
+}
+
+-(IBAction)addFreqForXMDict:(id)sender{
     NSMutableArray* array = [_dictStringTransformer xmDictArrayFromString:_stringOfTextFile hasCode:YES hasWord:YES hasFreq:NO];
     for (NSInteger i = 0; i < [array count]; ++i) {
         if ( ![codeGenerator apendWordFrequency:[array objectAtIndex:i]] ) {
@@ -75,7 +87,7 @@
     [_textView setString:_stringOfDictFile];
 }
 
--(IBAction)appendXMCodeForPY:(id)sender{
+-(IBAction)addXMCodeForPY:(id)sender{
     
     for (NSInteger i = 0; i < [_arrayOfPYDict count]; ++i) {
         NSMutableString * string = [NSMutableString stringWithString:@""];

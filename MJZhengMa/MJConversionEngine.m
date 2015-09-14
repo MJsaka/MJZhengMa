@@ -151,7 +151,7 @@
         if ([[array objectAtIndex:i] class] == [MJXMDict class]) {
             [candidatesClasses addObject:[MJXMDict class]];
             if ([originString length] < 4) {
-                [tips addObject:[NSString stringWithFormat:@"%c",[[[array objectAtIndex:i] codeString] characterAtIndex:[originString length]]]];
+                [tips addObject:[[[array objectAtIndex:i] codeString] substringFromIndex:[originString length]]];
             }
         }else if ([[array objectAtIndex:i] class] == [MJENDict class]){
             [candidatesClasses addObject:[MJENDict class]];

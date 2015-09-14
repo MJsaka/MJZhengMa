@@ -26,10 +26,15 @@
 -(IBAction)generateArrayOfXMDict:(id)sender;
 -(IBAction)generateArrayOfPYDict:(id)sender;
 
--(IBAction)generateCodeForXMDict:(id)sender;
+-(IBAction)addCodeForXMDict:(id)sender;
+
+-(IBAction)delDupForEngDict:(id)sender;
+
 -(IBAction)sortXMDict:(id)sender;
--(IBAction)appendFreqForXMDict:(id)sender;
--(IBAction)appendXMCodeForPY:(id)sender;
+-(IBAction)sortPYDict:(id)sender;
+
+-(IBAction)addFreqForXMDict:(id)sender;
+-(IBAction)addXMCodeForPY:(id)sender;
 
 -(IBAction)selectTextFile:(id)sender;
 -(IBAction)saveDictFile:(id)sender;

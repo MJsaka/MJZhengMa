@@ -25,12 +25,12 @@
 		C58ED5C71B9DB424005B355D /* zmdzcipin.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5C61B9DB424005B355D /* zmdzcipin.txt */; };
 		C58ED5C91B9DBA57005B355D /* zmdz.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5C81B9DBA57005B355D /* zmdz.txt */; };
 		C58ED5CB1B9DD9D5005B355D /* PYDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5CA1B9DD9D5005B355D /* PYDict.txt */; };
-		C58ED5CD1B9DE010005B355D /* EngDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = C58ED5CC1B9DE010005B355D /* EngDict.txt */; };
 		C5967B541AB1C746007CB8B9 /* MJCandidatesPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */; };
 		C5B97AF21AAA81DE00782594 /* MJCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */; };
 		C5B97AF31AAA81DE00782594 /* MJCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */; };
 		C5B97AF51AAA97A600782594 /* GouCi.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5B97AF41AAA97A600782594 /* GouCi.txt */; };
 		C5B97AF61AAA97A600782594 /* GouCi.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5B97AF41AAA97A600782594 /* GouCi.txt */; };
+		C5C877941BA69CCE0033B13F /* EngDict.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5C877931BA69CCE0033B13F /* EngDict.txt */; };
 		C5CBB17C1AABE360002A4088 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C55895DD1AA756EF00F17367 /* MainMenu.xib */; };
 		C5FE37AF1AA8743900E93EAA /* MJzheng.icns in Resources */ = {isa = PBXBuildFile; fileRef = C5A49C8D1AA74FC600FEA6E2 /* MJzheng.icns */; };
 /* End PBXBuildFile section */
@@ -63,13 +63,13 @@
 		C58ED5C61B9DB424005B355D /* zmdzcipin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zmdzcipin.txt; sourceTree = "<group>"; };
 		C58ED5C81B9DBA57005B355D /* zmdz.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zmdz.txt; sourceTree = "<group>"; };
 		C58ED5CA1B9DD9D5005B355D /* PYDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PYDict.txt; sourceTree = "<group>"; };
-		C58ED5CC1B9DE010005B355D /* EngDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EngDict.txt; sourceTree = "<group>"; };
 		C5967B531AB1C746007CB8B9 /* MJCandidatesPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJCandidatesPanel.m; sourceTree = "<group>"; };
 		C5A49C841AA74D0000FEA6E2 /* MJAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJAppDelegate.h; sourceTree = "<group>"; };
 		C5A49C851AA74D0000FEA6E2 /* MJAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJAppDelegate.m; sourceTree = "<group>"; };
 		C5B97AF01AAA81DE00782594 /* MJCodeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJCodeGenerator.h; sourceTree = "<group>"; };
 		C5B97AF11AAA81DE00782594 /* MJCodeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJCodeGenerator.m; sourceTree = "<group>"; };
 		C5B97AF41AAA97A600782594 /* GouCi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GouCi.txt; sourceTree = "<group>"; };
+		C5C877931BA69CCE0033B13F /* EngDict.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EngDict.txt; sourceTree = "<group>"; };
 		C5CCB2681B993B84002BE914 /* MacOS_KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacOS_KeyCode.h; sourceTree = "<group>"; };
 		C5CCB26A1B9AA42A002BE914 /* MJCandidatesPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJCandidatesPanel.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,7 +190,7 @@
 		C5F455791A9958580019DFE2 /* Dict */ = {
 			isa = PBXGroup;
 			children = (
-				C58ED5CC1B9DE010005B355D /* EngDict.txt */,
+				C5C877931BA69CCE0033B13F /* EngDict.txt */,
 				C58ED5CA1B9DD9D5005B355D /* PYDict.txt */,
 				C5026C541AABA167001A61B6 /* Base.txt */,
 				C5B97AF41AAA97A600782594 /* GouCi.txt */,
@@ -278,9 +278,9 @@
 				C5026C551AABA167001A61B6 /* Base.txt in Resources */,
 				C5CBB17C1AABE360002A4088 /* MainMenu.xib in Resources */,
 				C58ED5CB1B9DD9D5005B355D /* PYDict.txt in Resources */,
-				C58ED5CD1B9DE010005B355D /* EngDict.txt in Resources */,
 				C5B97AF51AAA97A600782594 /* GouCi.txt in Resources */,
 				C55895E21AA7588B00F17367 /* MJzheng.icns in Resources */,
+				C5C877941BA69CCE0033B13F /* EngDict.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

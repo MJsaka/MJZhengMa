@@ -307,8 +307,6 @@
     
     _hasKeyDownBetweenModifier= YES;
     _lastModifier = 0;
-    _isCreatWordMode = NO;
-    _isEnglishMode = NO;
     
     _candidatesCount = 0;
     _candidatesShowIndex = 0;
@@ -338,7 +336,7 @@
     if (_candidatesCount == 0) {
         [_candidatesPanel hide];
         return;
-    }else if (_candidatesCount == 1 && _originalCount == 4){
+    }else if (_candidatesCount == 1 && _originalCount == 4 && [_candidatesClasses objectAtIndex:0] == [MJXMDict class]){
         if (_isCreatWordMode) {
             [self wordBufferAppend:[_candidates objectAtIndex:_candidatesSelectedIndex]];
         } else {
