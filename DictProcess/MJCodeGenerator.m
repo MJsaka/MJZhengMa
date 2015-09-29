@@ -83,8 +83,8 @@
     }else if ( wordLength == 3 ) {
         [codeString appendFormat:@"%@%@%@",
          [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(0, 1)]] substringWithRange:NSMakeRange(0, 1)],
-         [_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(1, 1)]],
-         [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(2, 1)]] substringWithRange:NSMakeRange(0, 1)]];
+         [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(1, 1)]] substringWithRange:NSMakeRange(0, 1)],
+         [_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(2, 1)]]];
     }else {
         [codeString appendFormat:@"%@%@%@%@",
          [[_ZMGouCiDict objectForKey:[wordString substringWithRange:NSMakeRange(0, 1)]] substringWithRange:NSMakeRange(0, 1)],
