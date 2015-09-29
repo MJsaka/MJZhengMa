@@ -130,7 +130,7 @@
 //    NSLog(@"xm...start:%ld,end:%ld\npy...start:%ld,end:%ld\neng...start:%ld,end:%ld",_currentIndex[0].startIndex,_currentIndex[0].endIndex,_currentIndex[1].startIndex,_currentIndex[1].endIndex,_currentIndex[2].startIndex,_currentIndex[2].endIndex);
     NSInteger xmStartIndex = _currentIndex[0].startIndex;
     if (_currentIndex[0].startIndex != -1){
-        while([[[_xmDictArray objectAtIndex:_currentIndex[0].startIndex] codeString] length] == [originString length] && _currentIndex[0].startIndex <= _currentIndex[0].endIndex) {
+        while(_currentIndex[0].startIndex <= _currentIndex[0].endIndex &&[[[_xmDictArray objectAtIndex:_currentIndex[0].startIndex] codeString] length] == [originString length]) {
             [candidates addObject:[[_xmDictArray objectAtIndex:_currentIndex[0].startIndex] wordString]];
             [tips addObject:@""];
             [candidatesClasses addObject:[MJXMDict class]];
