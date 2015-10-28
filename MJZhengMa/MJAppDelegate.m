@@ -24,20 +24,21 @@
     if (initializing) {
         style = [[MJUIStyle alloc] init];
         
-        style.horizontal = NO;
+        style.horizontal = YES;
         style.inlinePreedit = NO;
         
-        style.fontName = @"SimSun";
-        style.fontSize = 28;
+        style.fontName = @"PingFang SC Light";
+
+        style.fontSize = 24;
         
         style.alpha = 1.0;
         
-        style.cornerRadius = 15;
-        style.borderHeight = 15;
-        style.borderWidth = 15;
+        style.cornerRadius = 5;
+        style.borderHeight = 5;
+        style.borderWidth = 10;
         
-        style.lineSpacing = 5;
-        style.spacing = 5;
+        style.lineSpacing = 0;
+        style.spacing = 0;
         
         style.backgroundColor = @"0xededed";
         style.textColor = @"0xe000e0";

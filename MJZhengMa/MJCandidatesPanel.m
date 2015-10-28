@@ -92,7 +92,9 @@ static const double kAlpha = 1.0;
 
 -(NSSize)contentSize
 {
-    if (!_content) return NSMakeSize(0, 0);
+    if (!_content) {
+        return NSMakeSize(0, 0);
+    }
     return [_content size];
 }
 
@@ -119,7 +121,7 @@ static const double kAlpha = 1.0;
     
     NSPoint point = rect.origin;
     point.x += [self borderWidth];
-    point.y += 331 - [self contentSize].height - [self borderHeight];
+    point.y += [self borderHeight];
     [_content drawAtPoint:point];
 }
 
@@ -190,11 +192,8 @@ static const double kAlpha = 1.0;
     NSRect window_rect = NSMakeRect(0, 0, 0, 0);
     // resize frame
     NSSize content_size = [_view contentSize];
-    window_rect.size.height = 331;
+    window_rect.size.height = content_size.height + [_view borderHeight]*2;
     window_rect.size.width = content_size.width + [_view borderWidth] * 2;
-    if (window_rect.size.width < 200) {
-        window_rect.size.width = 200;
-    }
     // reposition window
     window_rect.origin.x = NSMinX(_positionRect);
     window_rect.origin.y = NSMinY(_positionRect) - kOffsetHeight - NSHeight(window_rect);
@@ -231,7 +230,6 @@ static const double kAlpha = 1.0;
 
 -(void)hide
 {
-    
     [_window orderOut:nil];
 }
 
@@ -240,7 +238,6 @@ static const double kAlpha = 1.0;
     _positionRect = position;
     NSInteger _numCandidates = [candidates count];
     NSMutableAttributedString* text = [[NSMutableAttributedString alloc] init];
-    size_t candidate_start_pos = 0;
     
     for (NSInteger i = 0; i < _numCandidates; ++i) {
         NSMutableAttributedString *line = [[NSMutableAttributedString alloc] init];
@@ -269,9 +266,7 @@ static const double kAlpha = 1.0;
         }
         [text appendAttributedString:line];
     }
-    [text addAttribute:NSParagraphStyleAttributeName
-                 value:(id)_paragraphStyle
-                 range:NSMakeRange(candidate_start_pos, [text length] - candidate_start_pos)];
+    [text addAttribute:NSParagraphStyleAttributeName value:(id)_paragraphStyle range:NSMakeRange(0, [text length])];
     
     [_view setContent:text];
     [self show];
@@ -345,7 +340,7 @@ static NSFontDescriptor* getFontDescriptor(NSString *fullname)
         // use default font
         font = [NSFont userFontOfSize:style.fontSize];
     }
-    
+
     
     [_attrs setObject:font forKey:NSFontAttributeName];
     [_highlightedAttrs setObject:font forKey:NSFontAttributeName];
@@ -435,11 +430,11 @@ static NSFontDescriptor* getFontDescriptor(NSString *fullname)
     [_window setAlphaValue:style.alpha];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    [paragraphStyle setLineSpacing:style.lineSpacing];
+    paragraphStyle.paragraphSpacing = style.spacing;
     _paragraphStyle = paragraphStyle;
     
     paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    [paragraphStyle setParagraphSpacing:style.spacing];
+    paragraphStyle.paragraphSpacing = style.spacing;
     _preeditParagraphStyle = paragraphStyle;
 }
 
