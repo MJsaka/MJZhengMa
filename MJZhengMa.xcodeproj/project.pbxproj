@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C50DF5EB1AB9694E00AA2987 /* MJAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A49C851AA74D0000FEA6E2 /* MJAppDelegate.m */; };
-		C522876F1BBD02040083ACD8 /* Base.txt in Resources */ = {isa = PBXBuildFile; fileRef = C522876E1BBD02040083ACD8 /* Base.txt */; settings = {ASSET_TAGS = (); }; };
+		C522876F1BBD02040083ACD8 /* Base.txt in Resources */ = {isa = PBXBuildFile; fileRef = C522876E1BBD02040083ACD8 /* Base.txt */; };
 		C525A40A1A88EC3B007D73F3 /* MJConversionEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = C525A4001A88EC3B007D73F3 /* MJConversionEngine.m */; };
 		C525A40B1A88EC3B007D73F3 /* MJDict.m in Sources */ = {isa = PBXBuildFile; fileRef = C525A4021A88EC3B007D73F3 /* MJDict.m */; };
 		C525A40C1A88EC3B007D73F3 /* MJInputController.m in Sources */ = {isa = PBXBuildFile; fileRef = C525A4041A88EC3B007D73F3 /* MJInputController.m */; };
@@ -453,6 +453,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				INFOPLIST_FILE = "$(SRCROOT)/MJZhengMa/Resources/Base.lproj/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.MJsaka.inputmethod.MJZhengMa;

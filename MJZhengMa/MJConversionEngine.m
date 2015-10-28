@@ -78,9 +78,11 @@
     if(length > 0 && length < 7 && _currentIndex[1].startIndex != -1){ //PY
         Boolean findStartIndex = NO;
         Boolean findEndIndex = NO;
+
         while ([[[_pyDictArray objectAtIndex:_currentIndex[1].startIndex] codeString] length] < length) {
             _currentIndex[1].startIndex++;
         }
+
         for (NSInteger i = _currentIndex[1].startIndex; i <= _currentIndex[1].endIndex && !findEndIndex; ++i) {
             NSString* str = [[_pyDictArray objectAtIndex:i] codeString];
             if (!findStartIndex && [str isEqualToString:string]) {
@@ -91,11 +93,23 @@
                 _currentIndex[1].endIndex = i - 1;
             }
         }
-        if (!findStartIndex) {
-            _currentIndex[1].startIndex = -1;
-            _currentIndex[1].endIndex = -2;
+        if (!findStartIndex){
+            for (NSInteger i = _currentIndex[1].startIndex; i <= _currentIndex[1].endIndex && !findEndIndex; ++i) {
+                NSString* str = [[_pyDictArray objectAtIndex:i] codeString];
+                if (!findStartIndex && [str hasPrefix:string]) {
+                    findStartIndex = YES;
+                    _currentIndex[1].startIndex = i;
+                }else if(findStartIndex && ![str hasPrefix:string]){
+                    findEndIndex = YES;
+                    _currentIndex[1].endIndex = i - 1;
+                }
+            }
+            if (!findStartIndex) {
+                _currentIndex[1].startIndex = -1;
+                _currentIndex[1].endIndex = -2;
+            }
         }
-    }else if (length > 6){
+    }else if (length >= 7){
         _currentIndex[1].startIndex = -1;
         _currentIndex[1].endIndex = -2;
     }
