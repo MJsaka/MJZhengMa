@@ -139,19 +139,19 @@
                 break;
             }
             if (_candidatesCount != 0){
-                if (keyCode == OSX_VK_PAGE_UP || keyCode == OSX_VK_UP || keyCode == OSX_VK_MINUS){
+                if (keyCode == OSX_VK_PAGE_UP || keyCode == OSX_VK_LEFT || keyCode == OSX_VK_MINUS){
                     [self MJcandidateSelectionChanged:PAGE_PRE];
                     handled = YES;
                     break;
-                }else if (keyCode == OSX_VK_PAGE_DOWN || keyCode == OSX_VK_DOWN || keyCode == OSX_VK_EQUALS){
+                }else if (keyCode == OSX_VK_PAGE_DOWN || keyCode == OSX_VK_RIGHT || keyCode == OSX_VK_EQUALS){
                     [self MJcandidateSelectionChanged:PAGE_NEXT];
                     handled = YES;
                     break;
-                }else if (keyCode == OSX_VK_LEFT){
+                }else if (keyCode == OSX_VK_UP){
                     [self MJcandidateSelectionChanged:SELECTION_PRE];
                     handled = YES;
                     break;
-                }else if (keyCode == OSX_VK_RIGHT){
+                }else if (keyCode == OSX_VK_DOWN){
                     [self MJcandidateSelectionChanged:SELECTION_NEXT];
                     handled = YES;
                     break;

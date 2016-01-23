@@ -76,6 +76,7 @@ static const double kAlpha = 1.0;
 @implementation MJCandidatesView
 
 @synthesize backgroundColor = _backgroundColor;
+@synthesize horizontal = _horizontal;
 @synthesize cornerRadius = _cornerRadius;
 @synthesize borderHeight = _borderHeight;
 @synthesize borderWidth = _borderWidth;
@@ -118,10 +119,13 @@ static const double kAlpha = 1.0;
     }
     
     [[NSBezierPath bezierPathWithRoundedRect:rect xRadius:_cornerRadius yRadius:_cornerRadius] fill];
-    
     NSPoint point = rect.origin;
-    point.x += [self borderWidth];
-    point.y += [self borderHeight];
+    point.x += self.borderWidth;
+    if (!_horizontal) {
+        point.y += 321 - [self contentSize].height;
+    }else {
+        point.y += self.borderHeight;
+    }
     [_content drawAtPoint:point];
 }
 
@@ -151,7 +155,7 @@ static const double kAlpha = 1.0;
     [_attrs setObject:[NSColor controlTextColor] forKey:NSForegroundColorAttributeName];
     [_attrs setObject:[NSFont userFontOfSize:kFontSize] forKey:NSFontAttributeName];
     
-    
+
     _highlightedAttrs = [[NSMutableDictionary alloc] init];
     [_highlightedAttrs setObject:[NSColor selectedControlTextColor] forKey:NSForegroundColorAttributeName];
     [_highlightedAttrs setObject:[NSColor selectedTextBackgroundColor] forKey:NSBackgroundColorAttributeName];
@@ -194,6 +198,12 @@ static const double kAlpha = 1.0;
     NSSize content_size = [_view contentSize];
     window_rect.size.height = content_size.height + [_view borderHeight]*2;
     window_rect.size.width = content_size.width + [_view borderWidth] * 2;
+    if (!_horizontal) {
+        window_rect.size.height = 341;
+        if (window_rect.size.width < 200) {
+            window_rect.size.width = 200;
+        }
+    }
     // reposition window
     window_rect.origin.x = NSMinX(_positionRect);
     window_rect.origin.y = NSMinY(_positionRect) - kOffsetHeight - NSHeight(window_rect);
@@ -420,6 +430,7 @@ static NSFontDescriptor* getFontDescriptor(NSString *fullname)
         [_view setBackgroundColor:nil];
     }
     
+    [_view setHorizontal:style.horizontal];
     [_view setCornerRadius:style.cornerRadius];
     [_view setBorderHeight:style.borderHeight];
     [_view setBorderWidth:style.borderWidth];

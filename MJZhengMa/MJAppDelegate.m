@@ -24,28 +24,29 @@
     if (initializing) {
         style = [[MJUIStyle alloc] init];
         
-        style.horizontal = YES;
+        style.horizontal = NO;
         style.inlinePreedit = NO;
         
-        style.fontName = @"PingFang SC Light";
+        style.fontName = @"宋体";
 
-        style.fontSize = 24;
+        style.fontSize = 28;
         
         style.alpha = 1.0;
         
-        style.cornerRadius = 5;
-        style.borderHeight = 5;
-        style.borderWidth = 10;
+        style.cornerRadius = 20;
+        style.borderHeight = 20;
+        style.borderWidth = 20;
         
-        style.lineSpacing = 0;
-        style.spacing = 0;
+        style.lineSpacing = 5;
+        style.spacing = 5;
         
         style.backgroundColor = @"0xededed";
+        style.highlightedBackgroundColor = @"0xededed";
+
         style.textColor = @"0xe000e0";
         style.candidateTextColor = @"0x000000";
         
         
-        style.highlightedBackgroundColor = @"0xededed";
         style.highlightedTextColor = @"0xe000e0";
         style.highlightedCandidateTextColor = @"0x4080ff";
     

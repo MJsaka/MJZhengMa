@@ -45,6 +45,7 @@
     NSAttributedString* _content;
 }
 @property (nonatomic, retain) NSColor *backgroundColor;
+@property (nonatomic, assign) BOOL horizontal;
 @property (nonatomic, assign) double cornerRadius;
 @property (nonatomic, assign) double borderHeight;
 @property (nonatomic, assign) double borderWidth;
