@@ -121,11 +121,7 @@ static const double kAlpha = 1.0;
     [[NSBezierPath bezierPathWithRoundedRect:rect xRadius:_cornerRadius yRadius:_cornerRadius] fill];
     NSPoint point = rect.origin;
     point.x += self.borderWidth;
-    if (!_horizontal) {
-        point.y += 321 - [self contentSize].height;
-    }else {
-        point.y += self.borderHeight;
-    }
+    point.y += self.borderHeight;
     [_content drawAtPoint:point];
 }
 
@@ -198,11 +194,8 @@ static const double kAlpha = 1.0;
     NSSize content_size = [_view contentSize];
     window_rect.size.height = content_size.height + [_view borderHeight]*2;
     window_rect.size.width = content_size.width + [_view borderWidth] * 2;
-    if (!_horizontal) {
-        window_rect.size.height = 341;
-        if (window_rect.size.width < 200) {
-            window_rect.size.width = 200;
-        }
+    if (window_rect.size.width < 200) {
+        window_rect.size.width = 200;
     }
     // reposition window
     window_rect.origin.x = NSMinX(_positionRect);
@@ -271,8 +264,17 @@ static const double kAlpha = 1.0;
         [line appendAttributedString:
          [[NSAttributedString alloc] initWithString:
           [tips objectAtIndex:i] attributes:tipAttrs]];
-        if (i > 0){
-            [text appendAttributedString:[[NSAttributedString alloc] initWithString:(_horizontal ? @" " : @"\n") attributes:_attrs]];
+        if (i < 8){
+            [line appendAttributedString:[[NSAttributedString alloc] initWithString:(_horizontal ? @" " : @"\n") attributes:_attrs]];
+        }
+        [text appendAttributedString:line];
+    }
+    for (NSInteger i = _numCandidates; i < 9; ++i) {
+        NSMutableAttributedString *line;
+        if (i < 8) {
+            line = [[NSMutableAttributedString alloc] initWithString:@"\n" attributes:_attrs];
+        }else {
+            line = [[NSMutableAttributedString alloc] initWithString:@" " attributes:_attrs];
         }
         [text appendAttributedString:line];
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0730"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C525A3D91A88EBD5007D73F3"
-               BuildableName = "MJZhengMa.app"
-               BlueprintName = "MJZhengMa"
-               ReferencedContainer = "container:MJZhengMa.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C525A3EC1A88EBD5007D73F3"
-               BuildableName = "MJZhengMaTests.xctest"
-               BlueprintName = "MJZhengMaTests"
+               BlueprintIdentifier = "C55141EE1A8E3EEE00918016"
+               BuildableName = "DictProcess.app"
+               BlueprintName = "DictProcess"
                ReferencedContainer = "container:MJZhengMa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,23 +28,13 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C525A3EC1A88EBD5007D73F3"
-               BuildableName = "MJZhengMaTests.xctest"
-               BlueprintName = "MJZhengMaTests"
-               ReferencedContainer = "container:MJZhengMa.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C525A3D91A88EBD5007D73F3"
-            BuildableName = "MJZhengMa.app"
-            BlueprintName = "MJZhengMa"
+            BlueprintIdentifier = "C55141EE1A8E3EEE00918016"
+            BuildableName = "DictProcess.app"
+            BlueprintName = "DictProcess"
             ReferencedContainer = "container:MJZhengMa.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -79,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C525A3D91A88EBD5007D73F3"
-            BuildableName = "MJZhengMa.app"
-            BlueprintName = "MJZhengMa"
+            BlueprintIdentifier = "C55141EE1A8E3EEE00918016"
+            BuildableName = "DictProcess.app"
+            BlueprintName = "DictProcess"
             ReferencedContainer = "container:MJZhengMa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -98,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C525A3D91A88EBD5007D73F3"
-            BuildableName = "MJZhengMa.app"
-            BlueprintName = "MJZhengMa"
+            BlueprintIdentifier = "C55141EE1A8E3EEE00918016"
+            BuildableName = "DictProcess.app"
+            BlueprintName = "DictProcess"
             ReferencedContainer = "container:MJZhengMa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

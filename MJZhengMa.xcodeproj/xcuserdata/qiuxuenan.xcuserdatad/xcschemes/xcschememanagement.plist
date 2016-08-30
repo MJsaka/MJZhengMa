@@ -6,15 +6,11 @@
 	<dict>
 		<key>DictProcess.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<true/>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<key>MJZhengMa.xcscheme</key>
 		<dict>
-			<key>isShown</key>
-			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
@@ -26,22 +22,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C525A3EC1A88EBD5007D73F3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C55141EE1A8E3EEE00918016</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C55142001A8E3EEE00918016</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C572C8F51A8B3590006B6B31</key>
 		<dict>
 			<key>primary</key>
 			<true/>
