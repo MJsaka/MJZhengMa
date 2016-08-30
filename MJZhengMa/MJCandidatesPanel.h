@@ -17,7 +17,7 @@
 
 
 @property (nonatomic, copy) NSString* fontName;
-@property (nonatomic, assign) int fontSize;
+@property (nonatomic, assign) CGFloat fontSize;
 
 @property (nonatomic, assign) double alpha;
 @property (nonatomic, assign) double cornerRadius;

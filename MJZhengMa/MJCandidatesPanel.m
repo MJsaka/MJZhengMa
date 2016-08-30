@@ -443,7 +443,8 @@ static NSFontDescriptor* getFontDescriptor(NSString *fullname)
     [_window setAlphaValue:style.alpha];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.paragraphSpacing = style.spacing;
+    paragraphStyle.paragraphSpacing = style.lineSpacing;
+    paragraphStyle.maximumLineHeight = style.fontSize + style.spacing;
     _paragraphStyle = paragraphStyle;
     
     paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];

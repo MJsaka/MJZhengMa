@@ -27,7 +27,7 @@
         style.horizontal = NO;
         style.inlinePreedit = NO;
         
-        style.fontName = @"宋体";
+        style.fontName = @"Songti SC Regular";
 
         style.fontSize = 28;
         
