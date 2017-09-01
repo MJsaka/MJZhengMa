@@ -51,8 +51,8 @@
         _wordBuffer  = [NSMutableString stringWithString:@""];
         _wordCount = 0;
         
-        _conversionEngine = [[NSApp delegate] conversionEngine];
-        _candidatesPanel = [[NSApp delegate] candidatePanel];
+        _conversionEngine = [(MJAppDelegate*)[NSApp delegate] conversionEngine];
+        _candidatesPanel = [(MJAppDelegate*)[NSApp delegate] candidatePanel];
         
         _candidates = nil;
         _candidatesTips = nil;
