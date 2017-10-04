@@ -31,4 +31,6 @@ Install
 ===
 如果想将RIME郑码码表 https://github.com/acevery/rime-zhengma 里的dict.yaml文件转换过来，可以使用这个脚本：
 
-> $ awk 'started == 1 && NF == 4 {print $4, $2, $3;} started == 1 {print $1, $2, $3} $1 == "..." {started = 1; getline} ' ~/Library/Rime/zhengma.dict.yaml > .config/MJZhengMa/Base.txt
+```
+$ awk 'started == 1 && NF == 4 {print $4, $2, $3;} started == 1 {print $1, $2, $3} $1 == "..." {started = 1; getline} ' ~/Library/Rime/zhengma.dict.yaml > .config/MJZhengMa/Base.txt
+```
